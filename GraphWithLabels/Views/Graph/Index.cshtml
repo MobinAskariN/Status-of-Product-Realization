@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Graph";
+    var labels = ViewBag.Labels as List<GraphWithLabels.Models.Label>;
+    var edges = ViewBag.Edges as List<(GraphWithLabels.Models.Vertex, GraphWithLabels.Models.Vertex)>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        svg {
+            border: 1px solid black;
+        }
+
+        .vertex {
+            fill: blue;
+            cursor: pointer; /* Make it clear that vertices are interactive */
+        }
+
+        .edge {
+            stroke: black;
+            stroke-width: 1;
+        }
+
+        .label {
+            font-size: 12px;
+            fill: black;
+        }
+
+        .tooltip {
+            position: absolute;
+            padding: 5px;
+            background: lightgray;
+            border: 1px solid black;
+            border-radius: 3px;
+            pointer-events: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Graph</h1>
+
+    <svg width="800" height="500" id="graph">
+        <!-- Define the arrowhead marker -->
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" />
+            </marker>
+        </defs>
+
+        @foreach (var label in labels)
+        {
+            var labelY = 100 + (5 - label.Index) * 80;
+            @Html.Raw($"<text x='10' y='{labelY}' class='label'>Label {label.Index}</text>")
+
+            @for (int i = 0; i < label.Vertices.Count; i++)
+            {
+                var cx = 100 + i * 30;
+                var vertex = label.Vertices[i];
+                @Html.Raw($"<circle cx='{cx}' cy='{labelY}' r='5' class='vertex' data-label='{label.Index}' data-vertex='{vertex.VertexIndex}' />")
+            }
+        }
+
+        @foreach (var edge in edges)
+        {
+            var startX = 100 + edge.Item1.VertexIndex * 30;
+            var startY = 100 + (5 - edge.Item1.LabelIndex) * 80;
+            var endX = 100 + edge.Item2.VertexIndex * 30;
+            var endY = 100 + (5 - edge.Item2.LabelIndex) * 80;
+
+            @Html.Raw($"<line x1='{startX}' y1='{startY}' x2='{endX}' y2='{endY}' class='edge' marker-end='url(#arrowhead)' />")
+        }
+    </svg>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tooltip = document.getElementById('tooltip');
+            const graph = document.getElementById('graph');
+
+            graph.addEventListener('mouseover', function (e) {
+                if (e.target.tagName === 'circle') {
+                    console.log('Mouse over circle');
+                    const label = e.target.getAttribute('data-label');
+                    const vertex = e.target.getAttribute('data-vertex');
+                    console.log(`Label: ${label}, Vertex: ${vertex}`);
+                    tooltip.innerHTML = `Label: ${label}, Vertex: ${vertex}`;
+                    tooltip.style.display = 'block';
+                }
+            });
+
+            graph.addEventListener('mousemove', function (e) {
+                if (e.target.tagName === 'circle') {
+                    console.log('Mouse move over circle');
+                    tooltip.style.left = e.pageX + 10 + 'px';
+                    tooltip.style.top = e.pageY + 10 + 'px';
+                }
+            });
+
+            graph.addEventListener('mouseout', function (e) {
+                if (e.target.tagName === 'circle') {
+                    console.log('Mouse out of circle');
+                    tooltip.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
