@@ -2,13 +2,18 @@
 {
     public class Vertex
     {
-        public int LabelIndex { get; set; }
-        public int VertexIndex { get; set; }
+        public int labelIndex { get; set; }
+        public int vertexIndex { get; set; }
+
+        public int sanad1 { get; set; }
+        public int sanad2 { get; set; }
+        public int sanad3 { get; set; }
+
 
         public Vertex(int labelIndex, int vertexIndex)
         {
-            LabelIndex = labelIndex;
-            VertexIndex = vertexIndex;
+            this.labelIndex = labelIndex;
+            this.vertexIndex = vertexIndex;
         }
     }
 }
