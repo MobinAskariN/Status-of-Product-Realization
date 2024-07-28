@@ -15,12 +15,12 @@ namespace GraphWithLabels.Controllers
 
         public IActionResult Index()
         {
-            var stationId = 1;
-            var station = _context.station
-                                  .FirstOrDefault(s => s.stationId == stationId);
-            if (station != null)
+            var intLayerTypeId = 1;
+            var layer = _context.layer
+                                .FirstOrDefault(s => s.intLayerTypeId == intLayerTypeId);
+            if (layer != null)
             {
-                ViewBag.StationName = station.stataionName;
+                ViewBag.StationName = layer.layerName;
             }
             else
             {
