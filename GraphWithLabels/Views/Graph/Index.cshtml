@@ -55,12 +55,12 @@
         @foreach (var label in labels)
         {
             var labelY = 100 + (5 - label.index) * 80;
-            @Html.Raw($"<text x='10' y='{labelY}' class='label'>Label {label.index}</text>")
+            @Html.Raw($"<text x='10' y='{labelY}' class='label'>Label {label.name}</text>")
 
-            @for (int i = 0; i < label.getVertices().Count; i++)
+            @for (int i = 0; i < label.vertices.Count; i++)
             {
                 var cx = 100 + i * 30;
-                var vertex = label.getVertices()[i];
+                var vertex = label.vertices[i];
                 @Html.Raw($"<circle cx='{cx}' cy='{labelY}' r='5' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' />")
             }
         }

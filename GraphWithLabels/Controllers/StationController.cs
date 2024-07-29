@@ -15,7 +15,7 @@ namespace GraphWithLabels.Controllers
 
         public IActionResult Index()
         {
-            var intLayerTypeId = 1;
+            var intLayerTypeId = 5;
             var layer = _context.layer
                                 .FirstOrDefault(s => s.intLayerTypeId == intLayerTypeId);
             if (layer != null)

@@ -10,9 +10,6 @@ namespace GraphWithLabels.Models
         public DbSet<SectionTypeTreeSectionCharts> sectionTypeTreeSectionChart { get; set; }
         public DbSet<TreeSectionCharts> treeSectionChart { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }
 }

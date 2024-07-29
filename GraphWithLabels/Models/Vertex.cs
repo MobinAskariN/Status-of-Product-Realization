@@ -4,7 +4,7 @@
     {
         public int labelIndex { get; set; }
         public int vertexIndex { get; set; }
-
+        public int id { get; set; }
         public int sanad1 { get; set; }
         public int sanad2 { get; set; }
         public int sanad3 { get; set; }
