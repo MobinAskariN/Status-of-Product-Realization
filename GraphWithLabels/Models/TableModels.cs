@@ -31,6 +31,7 @@ namespace GraphWithLabels.Models
     }
 
     [Keyless]
+    [Table("SectionTypeTreeSectionCharts")]
     public class SectionTypeTreeSectionCharts
     {
         public int SectionType_ID { get; set; }
@@ -38,6 +39,7 @@ namespace GraphWithLabels.Models
 
     }
 
+    [Table("TreeSectionCharts")]
     public class TreeSectionCharts
     {
         public int ID { get; set; }

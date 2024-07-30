@@ -15,12 +15,13 @@ namespace GraphWithLabels.Controllers
 
         public IActionResult Index()
         {
-            var intLayerTypeId = 5;
-            var layer = _context.layer
-                                .FirstOrDefault(s => s.intLayerTypeId == intLayerTypeId);
+            var intLayerTypeId = 1007;
+            var layer = _context.sectionTypeTreeSectionChart
+                           .Where(p => p.SectionType_ID == intLayerTypeId)
+                           .ToList();
             if (layer != null)
             {
-                ViewBag.StationName = layer.layerName;
+                ViewBag.StationName = layer.First().TreeSectionChart_ID;
             }
             else
             {

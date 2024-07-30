@@ -17,7 +17,7 @@
 
         .vertex {
             fill: blue;
-            cursor: pointer; /* Make it clear that vertices are interactive */
+            cursor: pointer;
         }
 
         .edge {
@@ -54,23 +54,26 @@
 
         @foreach (var label in labels)
         {
-            var labelY = 100 + (5 - label.index) * 80;
-            @Html.Raw($"<text x='10' y='{labelY}' class='label'>Label {label.name}</text>")
+            var labelX = 100 + label.index * 150;  // Increase horizontal spacing for each label
+            var labelY = 30; // Fixed Y position for labels
 
-            @for (int i = 0; i < label.vertices.Count; i++)
+            @Html.Raw($"<text x='{labelX}' y='{labelY}' class='label'>{label.name}</text>")
+
+            int vertexSpacing = 400 / (label.vertices.Count + 1); // Adjust vertex spacing
+            for (int i = 0; i < label.vertices.Count; i++)
             {
-                var cx = 100 + i * 30;
+                var cy = 100 + vertexSpacing * (i + 1);
                 var vertex = label.vertices[i];
-                @Html.Raw($"<circle cx='{cx}' cy='{labelY}' r='5' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' />")
+                @Html.Raw($"<circle cx='{labelX}' cy='{cy}' r='5' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' />")
             }
         }
 
         @foreach (var edge in edges)
         {
-            var startX = 100 + edge.Item1.vertexIndex * 30;
-            var startY = 100 + (5 - edge.Item1.labelIndex) * 80;
-            var endX = 100 + edge.Item2.vertexIndex * 30;
-            var endY = 100 + (5 - edge.Item2.labelIndex) * 80;
+            var startX = 100 + edge.Item1.labelIndex * 150;
+            var startY = 100 + 400 / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
+            var endX = 100 + edge.Item2.labelIndex * 150;
+            var endY = 100 + 400 / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
 
             @Html.Raw($"<line x1='{startX}' y1='{startY}' x2='{endX}' y2='{endY}' class='edge' marker-end='url(#arrowhead)' />")
         }
@@ -85,10 +88,8 @@
 
             graph.addEventListener('mouseover', function (e) {
                 if (e.target.tagName === 'circle') {
-                    console.log('Mouse over circle');
                     const label = e.target.getAttribute('data-label');
                     const vertex = e.target.getAttribute('data-vertex');
-                    console.log(`Label: ${label}, Vertex: ${vertex}`);
                     tooltip.innerHTML = `Label: ${label}, Vertex: ${vertex}`;
                     tooltip.style.display = 'block';
                 }
@@ -96,7 +97,6 @@
 
             graph.addEventListener('mousemove', function (e) {
                 if (e.target.tagName === 'circle') {
-                    console.log('Mouse move over circle');
                     tooltip.style.left = e.pageX + 10 + 'px';
                     tooltip.style.top = e.pageY + 10 + 'px';
                 }
@@ -104,7 +104,6 @@
 
             graph.addEventListener('mouseout', function (e) {
                 if (e.target.tagName === 'circle') {
-                    console.log('Mouse out of circle');
                     tooltip.style.display = 'none';
                 }
             });

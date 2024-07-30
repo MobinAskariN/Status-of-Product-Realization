@@ -29,7 +29,7 @@ namespace GraphWithLabels.Controllers
                     = _context.getSectionTypeTreeSectionCharts(Int32.Parse(first_layer.sectionTypeId));
             
             Label first_label = new Label(first_station.stationName);
-            Vertex first_v = new Vertex(0, 0);
+            Vertex first_v = new Vertex(first_label.index, 0);
             first_v.id = first_sectionTree.First().TreeSectionChart_ID;
             first_label.addVertex(first_v);
             labels.Add(first_label);
@@ -47,10 +47,10 @@ namespace GraphWithLabels.Controllers
 
                 if(previous_layerId == station.layerId) // jaryan sabet
                 {
-                    current_label.vertices = labels.Last().vertices;
+                    current_label.vertices = labels.Last().vertices.Select(v => v.Copy()).ToList();
                     foreach (var v in current_label.vertices)
-                        v.labelIndex++;
-
+                        v.labelIndex = current_label.index;
+                    
                     for(int i = 0; i < labels.Last().vertices.Count; i++)
                     {
                         edges.Add((labels.Last().vertices[i], current_label.vertices[i]));
@@ -105,10 +105,22 @@ namespace GraphWithLabels.Controllers
 
 
 
-
+                labels.Add(current_label);
                 previous_layerId = station.layerId;
+                stationId++;
             }
 
+            foreach (Label l in labels)
+            {
+                Console.WriteLine (l.name);
+                foreach(Vertex u in l.vertices)
+                {
+                    Console.WriteLine("\t" + u.labelIndex);
+                }
+            }
+
+            ViewBag.Labels = labels;
+            ViewBag.Edges = edges;
             return View();
         }
     }

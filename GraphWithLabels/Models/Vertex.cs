@@ -15,5 +15,15 @@
             this.labelIndex = labelIndex;
             this.vertexIndex = vertexIndex;
         }
+        public Vertex() { }
+        public Vertex Copy()
+        {
+            return new Vertex
+            {
+                id = this.id,
+                labelIndex = this.labelIndex,
+                vertexIndex = this.vertexIndex
+            };
+        }
     }
 }
