@@ -87,7 +87,8 @@ namespace GraphWithLabels.Controllers
 
                             foreach (Vertex u in labels.Last().vertices)
                             {
-                                if (treeSectionCharts.ParentID == u.id)
+                                //treeSectionCharts.ParentID == u.id
+                                if (_context.is_child(u.id, treeSectionCharts.ParentID))
                                 {
                                     edges.Add((u, v));
                                 }

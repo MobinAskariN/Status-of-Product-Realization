@@ -44,7 +44,7 @@ namespace GraphWithLabels.Models
     {
         public int ID { get; set; }
         public string SectionName {  get; set; }
-        public int ParentID { get; set; }
+        public int? ParentID { get; set; }
 
     }
 }

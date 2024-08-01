@@ -40,5 +40,31 @@ namespace GraphWithLabels.Models
                                                     .FirstOrDefault(s => s.ID == ID);
             return treeSectionCharts;
         }
+
+        public bool is_child(int childId, int? parentId)
+        {
+            if (parentId == null)
+            {
+                return false;
+            }
+
+            var result = _context.treeSectionChart
+                .FromSqlRaw(@"
+            WITH Ancestors AS (
+                SELECT ID, SectionName, ParentID
+                FROM TreeSectionCharts
+                WHERE ID = {0}
+                UNION ALL
+                SELECT t.ID, t.SectionName, t.ParentID
+                FROM TreeSectionCharts t
+                INNER JOIN Ancestors a ON t.ID = a.ParentID
+            )
+            SELECT ID, SectionName, ParentID FROM Ancestors WHERE ID = {1}", childId, parentId.Value)
+                .ToList()
+                .Any();
+
+            return result;
+        }
+
     }
 }
