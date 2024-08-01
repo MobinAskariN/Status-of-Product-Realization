@@ -18,17 +18,17 @@ namespace GraphWithLabels.Controllers
         {
             var intLayerTypeId = 1007;
             var layer = _context.treeSectionChart
-            .FromSqlRaw(@"
-            WITH Ancestors AS (
+                .FromSqlRaw(@"
+            WITH Descendants AS (
                 SELECT ID, SectionName, ParentID
                 FROM TreeSectionCharts
                 WHERE ID = {0}
                 UNION ALL
                 SELECT t.ID, t.SectionName, t.ParentID
                 FROM TreeSectionCharts t
-                INNER JOIN Ancestors a ON t.ID = a.ParentID
+                INNER JOIN Descendants d ON t.ID = d.ParentID
             )
-            SELECT ID, SectionName, ParentID FROM Ancestors WHERE ID = {1}", 3095, 3092)
+            SELECT ID, SectionName, ParentID FROM Descendants WHERE ID = {1}", 3096, 3091)
             .ToList()
             .Any();
             if (layer == true)

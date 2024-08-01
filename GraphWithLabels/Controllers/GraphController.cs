@@ -58,21 +58,9 @@ namespace GraphWithLabels.Controllers
                 }
                 else if(station.layerId > previous_layerId) // jaryan vagara
                 {
-                    var layer = _context.getLayer(station.layerId);
-                    
-                    string[] numberStrings = layer.sectionTypeId.Split(',');
-                    List<int> numbers = new List<int>();
-                    foreach (string numberString in numberStrings)
-                    {
-                        if (int.TryParse(numberString, out int number))
-                        {
-                            numbers.Add(number);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"'{numberString}' is not a valid number.");
-                        }
-                    }
+                    var layer = _context.getLayer(station.layerId);                                       
+                    List<int> numbers = _context.extract_numbers(layer.sectionTypeId);
+
                     foreach (int sectionType_ID in numbers)
                     {
                         List<SectionTypeTreeSectionCharts> sectionTypeTreeSectionCharts 
@@ -87,20 +75,41 @@ namespace GraphWithLabels.Controllers
 
                             foreach (Vertex u in labels.Last().vertices)
                             {
-                                //treeSectionCharts.ParentID == u.id
-                                if (_context.is_child(u.id, treeSectionCharts.ParentID))
+                                if (_context.is_child(v.id, u.id))
                                 {
                                     edges.Add((u, v));
                                 }
                             }
                         }
-                        
-
                     }
 
                 }
                 else // jaryan hamgera
                 {
+                    var layer = _context.getLayer(station.layerId);
+                    List<int> numbers = _context.extract_numbers(layer.sectionTypeId);
+
+                    foreach (int sectionType_ID in numbers)
+                    {
+                        List<SectionTypeTreeSectionCharts> sectionTypeTreeSectionCharts
+                                = _context.getSectionTypeTreeSectionCharts(sectionType_ID);
+                        for (int i = 0; i < sectionTypeTreeSectionCharts.Count; i++)
+                        {
+                            TreeSectionCharts? treeSectionCharts
+                                = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
+                            Vertex v = new Vertex(current_label.index, i);
+                            v.id = sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID;
+                            current_label.addVertex(v);
+
+                            foreach (Vertex u in labels.Last().vertices)
+                            {
+                                if (_context.is_parent(u.id, v.id))
+                                {
+                                    edges.Add((u, v));
+                                }
+                            }
+                        }
+                    }
 
                 }
 

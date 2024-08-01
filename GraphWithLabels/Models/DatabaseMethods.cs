@@ -66,5 +66,50 @@ namespace GraphWithLabels.Models
             return result;
         }
 
+        public bool is_parent(int childId, int? parentId)
+        {
+            if (parentId == null)
+            {
+                return false;
+            }
+
+            var result = _context.treeSectionChart
+                .FromSqlRaw(@"
+            WITH Descendants AS (
+                SELECT ID, SectionName, ParentID
+                FROM TreeSectionCharts
+                WHERE ID = {0}
+                UNION ALL
+                SELECT t.ID, t.SectionName, t.ParentID
+                FROM TreeSectionCharts t
+                INNER JOIN Descendants d ON t.ID = d.ParentID
+            )
+            SELECT ID, SectionName, ParentID FROM Descendants WHERE ID = {1}", childId, parentId)
+            .ToList()
+            .Any();
+
+            return result;
+        }
+
+
+        public List<int> extract_numbers(String s_numbers)
+        {
+            string[] numberStrings = s_numbers.Split(',');
+            List<int> numbers = new List<int>();
+            foreach (string numberString in numberStrings)
+            {
+                if (int.TryParse(numberString, out int number))
+                {
+                    numbers.Add(number);
+                }
+                else
+                {
+                    Console.WriteLine($"'{numberString}' is not a valid number.");
+                }
+            }
+
+            return numbers;
+        }
+
     }
 }
