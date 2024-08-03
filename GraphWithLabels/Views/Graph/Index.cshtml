@@ -16,8 +16,22 @@
         }
 
         .vertex {
-            fill: blue;
             cursor: pointer;
+            stroke: black; /* Adds a border around the circle */
+            stroke-width: 1; /* Width of the border */
+            r: 20; /* Radius of the circle, making it larger */
+            transition: all 0.3s ease; /* Smooth transition for any changes */
+        }
+
+        .vertex:hover {
+            r: 25; /* Slightly increases the radius on hover */
+            fill: #009999; /* Changes color on hover */
+            stroke-width: 1; /* Increases border width on hover */
+            filter: drop-shadow(0px 0px 5px #666); /* Adds a shadow effect */
+        }
+
+        .vertex-text {
+            pointer-events: none; /* Ignore pointer events */
         }
 
         .edge {
@@ -44,7 +58,7 @@
 <body>
     <h1>Graph</h1>
 
-    <svg width="800" height="500" id="graph">
+    <svg width="1300" height="500" id="graph">
         <!-- Define the arrowhead marker -->
         <defs>
             <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
@@ -54,25 +68,41 @@
 
         @foreach (var label in labels)
         {
-            var labelX = 100 + label.index * 150;  // Increase horizontal spacing for each label
-            var labelY = 30; // Fixed Y position for labels
+            var labelX = 100 + label.index * 150;
+            var labelY = 30;
 
-            @Html.Raw($"<text x='{labelX}' y='{labelY}' class='label'>{label.name}</text>")
+            @Html.Raw($"<text x='{labelX - 30}' y='{labelY}' class='label'>{label.name}</text>")
 
-            int vertexSpacing = 400 / (label.vertices.Count + 1); // Adjust vertex spacing
+            int vertexSpacing = 400 / (label.vertices.Count + 1);
             for (int i = 0; i < label.vertices.Count; i++)
             {
                 var cy = 100 + vertexSpacing * (i + 1);
                 var vertex = label.vertices[i];
-                @Html.Raw($"<circle cx='{labelX}' cy='{cy}' r='5' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' />")
+                string color = "black";
+
+                if (vertex.doc_percent == 0)
+                {
+                    color = "#cc0066";
+                }
+                else if (vertex.doc_percent > 0 && vertex.doc_percent < 100)
+                {
+                    color = "#ffcc00";
+                }
+                else if (vertex.doc_percent == 100)
+                {
+                    color = "#00cc00";
+                }
+
+                @Html.Raw($"<circle cx='{labelX}' cy='{cy}' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' fill='{color}' />")
+                @Html.Raw($"<text x='{labelX}' y='{cy}' class='vertex-text' fill='black' font-size='18' text-anchor='middle' dy='.3em'>{vertex.doc_percent}</text>")
             }
         }
 
         @foreach (var edge in edges)
         {
-            var startX = 100 + edge.Item1.labelIndex * 150;
+            var startX = 100 + edge.Item1.labelIndex * 150 + 27;
             var startY = 100 + 400 / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
-            var endX = 100 + edge.Item2.labelIndex * 150;
+            var endX = 100 + edge.Item2.labelIndex * 150 - 27;
             var endY = 100 + 400 / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
 
             @Html.Raw($"<line x1='{startX}' y1='{startY}' x2='{endX}' y2='{endY}' class='edge' marker-end='url(#arrowhead)' />")
@@ -81,33 +111,5 @@
 
     <div id="tooltip" class="tooltip"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tooltip = document.getElementById('tooltip');
-            const graph = document.getElementById('graph');
-
-            graph.addEventListener('mouseover', function (e) {
-                if (e.target.tagName === 'circle') {
-                    const label = e.target.getAttribute('data-label');
-                    const vertex = e.target.getAttribute('data-vertex');
-                    tooltip.innerHTML = `Label: ${label}, Vertex: ${vertex}`;
-                    tooltip.style.display = 'block';
-                }
-            });
-
-            graph.addEventListener('mousemove', function (e) {
-                if (e.target.tagName === 'circle') {
-                    tooltip.style.left = e.pageX + 10 + 'px';
-                    tooltip.style.top = e.pageY + 10 + 'px';
-                }
-            });
-
-            graph.addEventListener('mouseout', function (e) {
-                if (e.target.tagName === 'circle') {
-                    tooltip.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>
