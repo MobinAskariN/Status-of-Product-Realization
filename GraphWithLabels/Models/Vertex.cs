@@ -8,10 +8,9 @@
         public int doc_percent { get; set; }
 
 
-        public Vertex(int labelIndex, int vertexIndex)
+        public Vertex(int labelIndex)
         {
             this.labelIndex = labelIndex;
-            this.vertexIndex = vertexIndex;
             doc_percent = 100;
         }
         public Vertex() { }

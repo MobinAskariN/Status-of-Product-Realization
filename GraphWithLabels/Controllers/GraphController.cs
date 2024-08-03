@@ -29,8 +29,9 @@ namespace GraphWithLabels.Controllers
                     = _context.getSectionTypeTreeSectionCharts(Int32.Parse(first_layer.sectionTypeId));
             
             Label first_label = new Label(first_station.stationName);
-            Vertex first_v = new Vertex(first_label.index, 0);
+            Vertex first_v = new Vertex(first_label.index);
             first_v.id = first_sectionTree.First().TreeSectionChart_ID;
+            first_v.vertexIndex = 0;
             first_label.addVertex(first_v);
             labels.Add(first_label);
 
@@ -69,16 +70,24 @@ namespace GraphWithLabels.Controllers
                         {
                             TreeSectionCharts? treeSectionCharts
                                 = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
-                            Vertex v = new Vertex(current_label.index , i);
+                            Vertex v = new Vertex(current_label.index);
                             v.id = sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID;
                             current_label.addVertex(v);
 
+                            bool has_set = false;
+                            int j = 0;
                             foreach (Vertex u in labels.Last().vertices)
                             {
                                 if (_context.is_child(v.id, u.id))
                                 {
+                                    if (has_set == false)
+                                    {
+                                        v.vertexIndex = j;
+                                        has_set = true;
+                                    }
                                     edges.Add((u, v));
                                 }
+                                j++;
                             }
                         }
                     }
@@ -97,16 +106,24 @@ namespace GraphWithLabels.Controllers
                         {
                             TreeSectionCharts? treeSectionCharts
                                 = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
-                            Vertex v = new Vertex(current_label.index, i);
+                            Vertex v = new Vertex(current_label.index);
                             v.id = sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID;
                             current_label.addVertex(v);
 
+                            bool has_set = false;
+                            int j = 0;
                             foreach (Vertex u in labels.Last().vertices)
                             {
                                 if (_context.is_parent(u.id, v.id))
                                 {
+                                    if (has_set == false)
+                                    {
+                                        v.vertexIndex = j;
+                                        has_set = true;
+                                    }
                                     edges.Add((u, v));
                                 }
+                                j++;
                             }
                         }
                     }
@@ -114,7 +131,7 @@ namespace GraphWithLabels.Controllers
                 }
 
 
-
+                current_label.set_vertexIndex();
                 labels.Add(current_label);
                 previous_layerId = station.layerId;
                 stationId++;
@@ -128,6 +145,8 @@ namespace GraphWithLabels.Controllers
                     Console.WriteLine("\t" + u.labelIndex);
                 }
             }
+            foreach((Vertex, Vertex) e in edges)
+                Console.WriteLine (e.Item1.id + " " + e.Item2.id);
 
             ViewBag.Labels = labels;
             ViewBag.Edges = edges;

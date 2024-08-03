@@ -17,7 +17,18 @@ namespace GraphWithLabels.Models
             vertices = new List<Vertex>();
         }
 
-        public void addVertex(Vertex v) { vertices.Add(v); }
+        public void addVertex(Vertex v)
+        {
+            vertices.Add(v);
+        }
+
+        public void set_vertexIndex()
+        {
+            List<Vertex> sortedVertices = vertices.OrderBy(v => v.vertexIndex).ToList();
+            for (int i = 0; i < sortedVertices.Count; i++)
+                sortedVertices[i].vertexIndex = i;
+        }
+
         public int num_vertices() {  return vertices.Count; }
     }
 }
