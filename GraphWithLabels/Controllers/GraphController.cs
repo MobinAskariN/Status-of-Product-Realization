@@ -149,6 +149,9 @@ namespace GraphWithLabels.Controllers
             foreach((Vertex, Vertex) e in edges)
                 Console.WriteLine (e.Item1.id + " " + e.Item2.id);
 
+
+            ViewBag.SvgWidth = labels.Count * 150 + 100;
+            ViewBag.Svgheight = 500;
             ViewBag.Labels = labels;
             ViewBag.Edges = edges;
             return View();

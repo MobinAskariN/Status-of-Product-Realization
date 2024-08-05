@@ -2,6 +2,8 @@
     ViewData["Title"] = "Graph";
     var labels = ViewBag.Labels as List<GraphWithLabels.Models.Label>;
     var edges = ViewBag.Edges as List<(GraphWithLabels.Models.Vertex, GraphWithLabels.Models.Vertex)>;
+    var svgwidth = ViewBag.SvgWidth;
+    var svgHeight = ViewBag.SvgHeight;
 }
 
 <!DOCTYPE html>
@@ -91,7 +93,7 @@
     <h1>Graph</h1>
 
     <div id="graph-container">
-        <svg width="1300" height="500" id="graph" viewBox="0 0 1300 500">
+        <svg width="@svgwidth" height="500" id="graph" viewBox="0 0 1300 500">
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" />
@@ -168,8 +170,8 @@
         function updateTransform() {
 
             // Update the size of the SVG to enable more extensive scrolling
-            svg.style.width = `${1300 * scale}px`;
-            svg.style.height = `${500 * scale}px`;
+            svg.style.width = `${@svgwidth * scale}px`;
+            svg.style.height = `${@svgHeight * scale}px`;
 
             // Update the scroll positions to keep the graph centered
             //graphContainer.scrollLeft = (svg.clientWidth - graphContainer.clientWidth) ;
