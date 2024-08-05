@@ -13,6 +13,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\wwwroot\\img\\expand.svg",
+      "PackagePath": "staticwebassets\\img\\expand.svg"
+    },
+    {
+      "Id": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\wwwroot\\img\\zoom out.svg",
+      "PackagePath": "staticwebassets\\img\\zoom out.svg"
+    },
+    {
+      "Id": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\wwwroot\\img\\zoom_in.svg",
+      "PackagePath": "staticwebassets\\img\\zoom_in.svg"
+    },
+    {
       "Id": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

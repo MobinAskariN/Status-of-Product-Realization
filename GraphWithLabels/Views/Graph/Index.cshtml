@@ -2,7 +2,7 @@
     ViewData["Title"] = "Graph";
     var labels = ViewBag.Labels as List<GraphWithLabels.Models.Label>;
     var edges = ViewBag.Edges as List<(GraphWithLabels.Models.Vertex, GraphWithLabels.Models.Vertex)>;
-    var svgwidth = ViewBag.SvgWidth;
+    var svgWidth = ViewBag.SvgWidth;
     var svgHeight = ViewBag.SvgHeight;
 }
 
@@ -29,12 +29,12 @@
             transition: all 0.3s ease;
         }
 
-            .vertex:hover {
-                r: 25;
-                fill: #009999;
-                stroke-width: 1;
-                filter: drop-shadow(0px 0px 5px #666);
-            }
+        .vertex:hover {
+            r: 25;
+            fill: #009999;
+            stroke-width: 1;
+            filter: drop-shadow(0px 0px 5px #666);
+        }
 
         .vertex-text {
             pointer-events: none;
@@ -62,7 +62,7 @@
 
         .zoom-controls {
             position: absolute;
-            bottom: 60px;
+            bottom: 70px;
             right: 10px;
             background: white;
             border: 1px solid black;
@@ -73,27 +73,27 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
-            .zoom-controls button {
-                margin: 2px 0;
-                padding: 5px;
-                background: #ffcc00;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-                font-size: 14px;
-                transition: background 0.3s ease;
-            }
+        .zoom-controls button {
+            margin: 2px 0;
+            padding: 5px;
+            background: #bacbe6;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
 
-                .zoom-controls button:hover {
-                    background: #ff9900;
-                }
+        .zoom-controls button:hover {
+            background: #97a6bd;
+        }
     </style>
 </head>
 <body>
     <h1>Graph</h1>
 
     <div id="graph-container">
-        <svg width="@svgwidth" height="500" id="graph" viewBox="0 0 1300 500">
+        <svg width="@svgWidth" height="@svgHeight" id="graph" viewBox="0 0 1300 500">
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" />
@@ -102,15 +102,15 @@
 
             @foreach (var label in labels)
             {
-                var labelX = 100 + label.index * 150;
+                var labelX = 30 + label.index * 150;
                 var labelY = 30;
 
                 @Html.Raw($"<text x='{labelX - 30}' y='{labelY}' class='label'>{label.name}</text>")
 
-                int vertexSpacing = 400 / (label.vertices.Count + 1);
+                int vertexSpacing = (svgHeight) / (label.vertices.Count + 1);
                 for (int i = 0; i < label.vertices.Count; i++)
                 {
-                    var cy = 100 + vertexSpacing * (i + 1);
+                    var cy = 60 + vertexSpacing * (i + 1);
                     var vertex = label.vertices[i];
                     string color = "black";
 
@@ -136,20 +136,25 @@
 
             @foreach (var edge in edges)
             {
-                var startX = 100 + edge.Item1.labelIndex * 150 + 27;
-                var startY = 100 + 400 / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
-                var endX = 100 + edge.Item2.labelIndex * 150 - 27;
-                var endY = 100 + 400 / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
+                var startX = 30 + edge.Item1.labelIndex * 150 + 27;
+                var startY = 60 + svgHeight / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
+                var endX = 30 + edge.Item2.labelIndex * 150 - 27;
+                var endY = 60 + svgHeight / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
 
                 @Html.Raw($"<line x1='{startX}' y1='{startY}' x2='{endX}' y2='{endY}' class='edge' marker-end='url(#arrowhead)' />")
             }
         </svg>
     </div>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div id="tooltip" class="tooltip"></div>
     <div class="zoom-controls">
-        <button onclick="zoomIn()">Zoom In</button>
-        <button onclick="zoomOut()">Zoom Out</button>
+        <button onclick="zoomIn()">
+            <i class="fa fa-search-plus" style="font-size:36px"></i>
+        </button>
+        <button onclick="zoomOut()">
+            <i class="fa fa-search-minus" style="font-size:36px"></i>
+        </button>
     </div>
 
     <script>
@@ -163,16 +168,18 @@
         }
 
         function zoomOut() {
-            scale = Math.max(0.1, scale - 0.1);
-            updateTransform();
+            if (@svgWidth * scale > 1300) {
+                scale -= 0.1;
+                updateTransform();
+            }
         }
 
         function updateTransform() {
 
             // Update the size of the SVG to enable more extensive scrolling
-            svg.style.width = `${@svgwidth * scale}px`;
+            svg.style.width = `${@svgWidth * scale}px`;
             svg.style.height = `${@svgHeight * scale}px`;
-
+            
             // Update the scroll positions to keep the graph centered
             //graphContainer.scrollLeft = (svg.clientWidth - graphContainer.clientWidth) ;
             //graphContainer.scrollTop = (svg.clientHeight - graphContainer.clientHeight);

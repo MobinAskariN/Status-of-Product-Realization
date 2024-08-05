@@ -18,6 +18,7 @@ namespace GraphWithLabels.Controllers
         {
             var labels = new List<Label>();
             var edges = new List<(Vertex, Vertex)>();
+            int max_nv = 1;
 
             int stationId = 1;
             int previous_layerId;
@@ -38,6 +39,7 @@ namespace GraphWithLabels.Controllers
 
             stationId++;
             previous_layerId = first_station.layerId;
+            max_nv = Math.Max(max_nv, 1);
 
             while (true) // stationId >= 2
             {
@@ -63,11 +65,14 @@ namespace GraphWithLabels.Controllers
                     var layer = _context.getLayer(station.layerId);                                       
                     List<int> numbers = _context.extract_numbers(layer.sectionTypeId);
 
+                    int number_of_vertices = 0;
                     foreach (int sectionType_ID in numbers)
                     {
                         List<SectionTypeTreeSectionCharts> sectionTypeTreeSectionCharts 
                                 = _context.getSectionTypeTreeSectionCharts(sectionType_ID);
-                        for(int i = 0; i <  sectionTypeTreeSectionCharts.Count; i++)
+                        number_of_vertices += sectionTypeTreeSectionCharts.Count;
+
+                        for (int i = 0; i <  sectionTypeTreeSectionCharts.Count; i++)
                         {
                             TreeSectionCharts? treeSectionCharts
                                 = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
@@ -92,17 +97,20 @@ namespace GraphWithLabels.Controllers
                             }
                         }
                     }
-
+                    max_nv = Math.Max(max_nv, number_of_vertices);
                 }
                 else // jaryan hamgera
                 {
                     var layer = _context.getLayer(station.layerId);
                     List<int> numbers = _context.extract_numbers(layer.sectionTypeId);
 
+                    int number_of_vertices = 0;
                     foreach (int sectionType_ID in numbers)
                     {
                         List<SectionTypeTreeSectionCharts> sectionTypeTreeSectionCharts
                                 = _context.getSectionTypeTreeSectionCharts(sectionType_ID);
+                        number_of_vertices += sectionTypeTreeSectionCharts.Count;
+
                         for (int i = 0; i < sectionTypeTreeSectionCharts.Count; i++)
                         {
                             TreeSectionCharts? treeSectionCharts
@@ -128,7 +136,7 @@ namespace GraphWithLabels.Controllers
                             }
                         }
                     }
-
+                    max_nv = Math.Max(max_nv, number_of_vertices);
                 }
 
 
@@ -151,7 +159,7 @@ namespace GraphWithLabels.Controllers
 
 
             ViewBag.SvgWidth = labels.Count * 150 + 100;
-            ViewBag.Svgheight = 500;
+            ViewBag.Svgheight = max_nv * 90;
             ViewBag.Labels = labels;
             ViewBag.Edges = edges;
             return View();
