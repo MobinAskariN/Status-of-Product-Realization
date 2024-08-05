@@ -6,11 +6,13 @@
         public int vertexIndex { get; set; }
         public int id { get; set; }
         public int doc_percent { get; set; }
+        public string? vertexName { get; set; }
 
 
-        public Vertex(int labelIndex)
+        public Vertex(int labelIndex, string? vertexName)
         {
             this.labelIndex = labelIndex;
+            this.vertexName = vertexName;
             doc_percent = 100;
         }
         public Vertex() { }
@@ -20,7 +22,8 @@
             {
                 id = this.id,
                 labelIndex = this.labelIndex,
-                vertexIndex = this.vertexIndex
+                vertexIndex = this.vertexIndex,
+                vertexName = this.vertexName
             };
         }
     }

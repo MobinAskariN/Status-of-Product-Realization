@@ -27,9 +27,10 @@ namespace GraphWithLabels.Controllers
             Layer? first_layer = _context.getLayer(first_station.layerId);
             List<SectionTypeTreeSectionCharts> first_sectionTree 
                     = _context.getSectionTypeTreeSectionCharts(Int32.Parse(first_layer.sectionTypeId));
+            TreeSectionCharts? first_treeSectionCharts = _context.getTreeSectionCharts(first_sectionTree.First().TreeSectionChart_ID);
             
             Label first_label = new Label(first_station.stationName);
-            Vertex first_v = new Vertex(first_label.index);
+            Vertex first_v = new Vertex(first_label.index, first_treeSectionCharts.SectionName);
             first_v.id = first_sectionTree.First().TreeSectionChart_ID;
             first_v.vertexIndex = 0;
             first_label.addVertex(first_v);
@@ -70,7 +71,7 @@ namespace GraphWithLabels.Controllers
                         {
                             TreeSectionCharts? treeSectionCharts
                                 = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
-                            Vertex v = new Vertex(current_label.index);
+                            Vertex v = new Vertex(current_label.index, treeSectionCharts.SectionName);
                             v.id = sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID;
                             current_label.addVertex(v);
 
@@ -106,7 +107,7 @@ namespace GraphWithLabels.Controllers
                         {
                             TreeSectionCharts? treeSectionCharts
                                 = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
-                            Vertex v = new Vertex(current_label.index);
+                            Vertex v = new Vertex(current_label.index, treeSectionCharts.SectionName);
                             v.id = sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID;
                             current_label.addVertex(v);
 

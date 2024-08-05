@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "E:\\code source!\\csharp project\\akhlagh-project\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\controllers\\graphcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\controllers\\graphcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\models\\label.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\models\\label.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,37 +26,35 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "GraphController.cs",
               "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Controllers\\GraphController.cs",
               "RelativeDocumentMoniker": "GraphWithLabels\\Controllers\\GraphController.cs",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Controllers\\GraphController.cs",
               "RelativeToolTip": "GraphWithLabels\\Controllers\\GraphController.cs",
-              "ViewState": "AQIAAG0AAAAAAAAAAAAAAIUAAAAwAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAYwHEAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-28T09:40:44.771Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-28T09:40:44.771Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Vertex.cs",
               "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\Vertex.cs",
               "RelativeDocumentMoniker": "GraphWithLabels\\Models\\Vertex.cs",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\Vertex.cs",
               "RelativeToolTip": "GraphWithLabels\\Models\\Vertex.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAA1wBcAAAAOAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAA5wBkAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T10:22:38.335Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-30T10:22:38.335Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Label.cs",
               "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\Label.cs",
               "RelativeDocumentMoniker": "GraphWithLabels\\Models\\Label.cs",
@@ -64,18 +62,17 @@
               "RelativeToolTip": "GraphWithLabels\\Models\\Label.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAA3wBoAAABYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T10:03:03.067Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-30T10:03:03.067Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
               "RelativeDocumentMoniker": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
               "RelativeToolTip": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "ViewState": "AQIAAFcAAAAAAAAAAAAAAFIAAAAsAAAA",
+              "ViewState": "AQIAAJ4AAAAAAAAAAAAIwLEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-07-30T09:01:11.261Z",
               "EditorCaption": ""
