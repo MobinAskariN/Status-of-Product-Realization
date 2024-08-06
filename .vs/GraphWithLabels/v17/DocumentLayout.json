@@ -26,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "RelativeDocumentMoniker": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "RelativeToolTip": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T13:12:20.69Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -36,10 +49,9 @@
               "RelativeDocumentMoniker": "GraphWithLabels\\Controllers\\GraphController.cs",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Controllers\\GraphController.cs",
               "RelativeToolTip": "GraphWithLabels\\Controllers\\GraphController.cs",
-              "ViewState": "AQIAAJEAAAAAAAAAAAAAAKEAAAArAAAA",
+              "ViewState": "AQIAAI4AAAAAAAAAAAAAAKEAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-28T09:40:44.771Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-28T09:40:44.771Z"
             },
             {
               "$type": "Document",
@@ -64,19 +76,6 @@
               "ViewState": "AQIAAAsAAAAAAAAAAAA3wBoAAABYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-30T10:03:03.067Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "RelativeDocumentMoniker": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "RelativeToolTip": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "ViewState": "AQIAAHIAAAAAAAAAAAAAAIwAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-07-30T09:01:11.261Z",
-              "EditorCaption": ""
             }
           ]
         }

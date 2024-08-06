@@ -159,7 +159,7 @@ namespace GraphWithLabels.Controllers
 
 
             ViewBag.SvgWidth = labels.Count * 150 + 100;
-            ViewBag.Svgheight = max_nv * 90;
+            ViewBag.Svgheight = max_nv * 120 + 300;
             ViewBag.Labels = labels;
             ViewBag.Edges = edges;
             return View();

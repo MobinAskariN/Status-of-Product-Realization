@@ -15,7 +15,7 @@
     <style>
         #graph-container {
             border: 1px solid black;
-            width: 100%;
+            width: 1300px;
             height: 500px;
             overflow: auto;
             position: relative;
@@ -46,8 +46,12 @@
         }
 
         .label {
-            font-size: 12px;
-            fill: black;
+            font-size: 16px;
+            fill: #007BFF; /* Text color */
+            stroke: #0056b3; /* Border color */
+            stroke-width: 1px; /* Border width */
+            paint-order: stroke; /* Ensures the stroke is drawn before the fill */
+            stroke-linejoin: round; /* Smoothens the corners of the stroke */
         }
 
         .tooltip {
@@ -102,15 +106,15 @@
 
             @foreach (var label in labels)
             {
-                var labelX = 30 + label.index * 150;
-                var labelY = 30;
+                var labelX = 60 + label.index * 150;
+                var labelY = -100;
 
-                @Html.Raw($"<text x='{labelX - 30}' y='{labelY}' class='label'>{label.name}</text>")
+                @Html.Raw($"<text x='{labelX}' y='{labelY}' class='label' text-anchor='middle'>{label.name}</text>")
 
-                int vertexSpacing = (svgHeight) / (label.vertices.Count + 1);
+                int vertexSpacing = (svgHeight-300) / (label.vertices.Count + 1);
                 for (int i = 0; i < label.vertices.Count; i++)
                 {
-                    var cy = 60 + vertexSpacing * (i + 1);
+                    var cy = vertexSpacing * (i + 1) - 50;
                     var vertex = label.vertices[i];
                     string color = "black";
 
@@ -128,7 +132,7 @@
                     }
 
                     @Html.Raw($"<circle cx='{labelX}' cy='{cy}' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' fill='{color}' />")
-                    @Html.Raw($"<text x='{labelX}' y='{cy - 30}' class='vertex-text' fill='black' font-size='10' text-anchor='middle' dy='.3em'>{vertex.vertexName}</text>")
+                    @Html.Raw($"<text x='{labelX}' y='{cy - 35}' class='vertex-text' fill='black' font-size='10' text-anchor='middle' dy='.3em'>{vertex.vertexName}</text>")
                     if (vertex.doc_percent != 100 && vertex.doc_percent != 0)
                         @Html.Raw($"<text x='{labelX}' y='{cy}' class='vertex-text' fill='black' font-size='18' text-anchor='middle' dy='.3em'>{vertex.doc_percent}</text>")
                 }
@@ -136,10 +140,10 @@
 
             @foreach (var edge in edges)
             {
-                var startX = 30 + edge.Item1.labelIndex * 150 + 27;
-                var startY = 60 + svgHeight / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
-                var endX = 30 + edge.Item2.labelIndex * 150 - 27;
-                var endY = 60 + svgHeight / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
+                var startX = 60 + edge.Item1.labelIndex * 150 + 27;
+                var startY = -50 + (svgHeight-300) / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
+                var endX = 60 + edge.Item2.labelIndex * 150 - 27;
+                var endY = -50 + (svgHeight-300) / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
 
                 @Html.Raw($"<line x1='{startX}' y1='{startY}' x2='{endX}' y2='{endY}' class='edge' marker-end='url(#arrowhead)' />")
             }
@@ -168,7 +172,7 @@
         }
 
         function zoomOut() {
-            if (@svgWidth * scale > 1300) {
+            if (@svgWidth * scale > 1300 || @svgHeight * scale > 500) {
                 scale -= 0.1;
                 updateTransform();
             }
