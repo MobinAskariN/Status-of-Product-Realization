@@ -1,10 +1,9 @@
 
-# Product Status Project
+# Status of Product Realization Project
 
-Welcome to the Product Status project! This project demonstrates status of product realization graph visualization in an ASP.NET MVC application using .NET 8.
+Welcome to the Status of Product Realization project! This project demonstrates status of product realization graph visualization in an ASP.NET MVC application using .NET 8.
 This is actually my first project in my career.
 
-![picture](Screenshot 2024-08-06 214414.png)
 ## Getting Started
 
 To set up and run this project, follow the steps below:
@@ -41,10 +40,14 @@ To set up and run this project, follow the steps below:
 ### Running the Project
 
 1. **Open Visual Studio**:  
-   Open Visual Studio 2022 and load the Product Status project.
+   Open Visual Studio 2022 and load the Status of Product Realization project.
 
 2. **Run the Project**:  
    Press `F5` to build and run the project. This will start the application and open it in your default web browser.
+   
+2. **Open the page**:  
+   After the main page comes up, type "/Graph" after url in your browser. The url should be something like this : https://localhost:7242/Graph
+   
 ## Contact me :))
 - [Telegram](https://t.me/mobin_ask)
 
