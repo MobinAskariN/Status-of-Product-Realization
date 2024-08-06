@@ -17,43 +17,47 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GraphWithLabels
 build_property.RootNamespace = GraphWithLabels
-build_property.ProjectDir = E:\code source!\csharp project\GraphWithLabels\GraphWithLabels\
+build_property.ProjectDir = E:\code source!\csharp project\akhlagh-project\GraphWithLabels\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = E:\code source!\csharp project\GraphWithLabels\GraphWithLabels
+build_property.MSBuildProjectDirectory = E:\code source!\csharp project\akhlagh-project\GraphWithLabels
 build_property._RazorSourceGeneratorDebug = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/Graph/Index.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/Graph/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhcGhcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/Home/Index.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/Home/Privacy.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/Shared/Error.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/Shared/_ValidationScriptsPartial.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/_ViewImports.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/Station/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/_ViewStart.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/code source\!/csharp project/GraphWithLabels/GraphWithLabels/Views/Shared/_Layout.cshtml]
+[E:/code source\!/csharp project/akhlagh-project/GraphWithLabels/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-729v9p4k00

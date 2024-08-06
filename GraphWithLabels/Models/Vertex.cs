@@ -2,13 +2,29 @@
 {
     public class Vertex
     {
-        public int LabelIndex { get; set; }
-        public int VertexIndex { get; set; }
+        public int labelIndex { get; set; }
+        public int vertexIndex { get; set; }
+        public int id { get; set; }
+        public int doc_percent { get; set; }
+        public string? vertexName { get; set; }
 
-        public Vertex(int labelIndex, int vertexIndex)
+
+        public Vertex(int labelIndex, string? vertexName)
         {
-            LabelIndex = labelIndex;
-            VertexIndex = vertexIndex;
+            this.labelIndex = labelIndex;
+            this.vertexName = vertexName;
+            doc_percent = 100;
+        }
+        public Vertex() { }
+        public Vertex Copy()
+        {
+            return new Vertex
+            {
+                id = this.id,
+                labelIndex = this.labelIndex,
+                vertexIndex = this.vertexIndex,
+                vertexName = this.vertexName
+            };
         }
     }
 }

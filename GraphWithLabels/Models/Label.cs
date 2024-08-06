@@ -4,17 +4,31 @@ namespace GraphWithLabels.Models
 {
     public class Label
     {
-        public int Index { get; set; }
-        public List<Vertex> Vertices { get; set; }
+        public static int s_index = 0;
+        public int index;
+        public string name { get; }
+        public List<Vertex> vertices { get; set; }
 
-        public Label(int index, int numberOfVertices)
+        public Label(String name)
         {
-            Index = index;
-            Vertices = new List<Vertex>();
-            for (int i = 0; i < numberOfVertices; i++)
-            {
-                Vertices.Add(new Vertex(index, i));
-            }
+            this.index = s_index;
+            s_index++;
+            this.name = name;
+            vertices = new List<Vertex>();
         }
+
+        public void addVertex(Vertex v)
+        {
+            vertices.Add(v);
+        }
+
+        public void set_vertexIndex()
+        {
+            List<Vertex> sortedVertices = vertices.OrderBy(v => v.vertexIndex).ToList();
+            for (int i = 0; i < sortedVertices.Count; i++)
+                sortedVertices[i].vertexIndex = i;
+        }
+
+        public int num_vertices() {  return vertices.Count; }
     }
 }
