@@ -9,6 +9,9 @@ namespace GraphWithLabels.Models
         public DbSet<SectionTypes> sectionType { get; set; }
         public DbSet<SectionTypeTreeSectionCharts> sectionTypeTreeSectionChart { get; set; }
         public DbSet<TreeSectionCharts> treeSectionChart { get; set; }
+        public DbSet<TreeSectionChartDocuments> treeSectionChartDocuments { get; set; }
+        public DbSet<Documents> documents { get; set; }
+        
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }

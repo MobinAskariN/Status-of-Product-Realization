@@ -91,6 +91,20 @@ namespace GraphWithLabels.Models
             return result;
         }
 
+        public List<TreeSectionChartDocuments> getTreeSectionChartDocuments(int treeSectionChart_ID)
+        {
+            return _context.treeSectionChartDocuments
+                           .Where(p => p.TreeSectionChart_ID == treeSectionChart_ID)
+                           .ToList();
+        }
+
+        public Documents? getDocument(int ID)
+        {
+            Documents? documents = _context.documents
+                                           .FirstOrDefault(s => s.ID == ID);
+            return documents;
+        }
+
 
         public List<int> extract_numbers(String s_numbers)
         {
@@ -109,6 +123,26 @@ namespace GraphWithLabels.Models
             }
 
             return numbers;
+        }
+
+        public Dictionary<int, int> required_doc(String s_doc)
+        {  
+            Dictionary<int, int> ans = new Dictionary<int, int>();
+
+            string[] partStrings = s_doc.Split(';');
+            foreach(string s in partStrings)
+            {
+                string[] n = s.Split(",");
+                if (int.TryParse(n[0], out int number1) && int.TryParse(n[1], out int number2))
+                {
+                    ans.Add(number1, number2);
+                }
+                else
+                {
+                    Console.WriteLine($"'{n[0]}' || '{n[1]}' is not a valid number.");
+                }
+            }
+            return ans;
         }
 
     }

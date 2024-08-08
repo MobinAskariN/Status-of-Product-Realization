@@ -37,6 +37,26 @@ namespace GraphWithLabels.Controllers
             first_label.addVertex(first_v);
             labels.Add(first_label);
 
+            if (first_station.requiredDocId != null)
+            {
+                Dictionary<int, int> required_doc = _context.required_doc(first_station.requiredDocId);
+
+                foreach (Vertex v in first_label.vertices)
+                {
+                    List<TreeSectionChartDocuments> treeSectionChartDocuments
+                        = _context.getTreeSectionChartDocuments(v.id);
+                    foreach (TreeSectionChartDocuments TreeDocument in treeSectionChartDocuments)
+                    {
+                        Documents? document = _context.getDocument(TreeDocument.Document_ID);
+                        if (required_doc.Keys.Contains(document.DOCTYPEID))
+                        {
+                            v.doc_percent += required_doc[document.DOCTYPEID];
+                        }
+                    }
+                }
+            }
+
+
             stationId++;
             previous_layerId = first_station.layerId;
             max_nv = Math.Max(max_nv, 1);
@@ -139,6 +159,23 @@ namespace GraphWithLabels.Controllers
                     max_nv = Math.Max(max_nv, number_of_vertices);
                 }
 
+                if(station.requiredDocId != null) { 
+                    Dictionary<int, int> required_doc = _context.required_doc(station.requiredDocId);
+                    
+                    foreach (Vertex v in current_label.vertices)
+                    {
+                        List<TreeSectionChartDocuments> treeSectionChartDocuments 
+                            = _context.getTreeSectionChartDocuments(v.id);
+                        foreach (TreeSectionChartDocuments TreeDocument in treeSectionChartDocuments)
+                        {
+                            Documents? document = _context.getDocument(TreeDocument.Document_ID);
+                            if (required_doc.Keys.Contains(document.DOCTYPEID))
+                            {
+                                v.doc_percent += required_doc[document.DOCTYPEID];
+                            }
+                        }
+                    }
+                }
 
                 current_label.set_vertexIndex();
                 labels.Add(current_label);

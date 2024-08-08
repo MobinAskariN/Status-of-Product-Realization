@@ -13,7 +13,7 @@
         {
             this.labelIndex = labelIndex;
             this.vertexName = vertexName;
-            doc_percent = 100;
+            doc_percent = 0;
         }
         public Vertex() { }
         public Vertex Copy()
