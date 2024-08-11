@@ -44,7 +44,7 @@
               "RelativeDocumentMoniker": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
               "RelativeToolTip": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAACYAAAAbAAAA",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAAAGcAAABXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-08-10T13:45:07.807Z",
               "EditorCaption": ""
@@ -57,7 +57,7 @@
               "RelativeDocumentMoniker": "GraphWithLabels\\Controllers\\GraphController.cs",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Controllers\\GraphController.cs",
               "RelativeToolTip": "GraphWithLabels\\Controllers\\GraphController.cs",
-              "ViewState": "AQIAAOAAAAAAAAAAAAAAAMUAAAAAAAAA",
+              "ViewState": "AQIAAH8AAAAAAAAAAAAAAOcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-28T09:40:44.771Z",
               "EditorCaption": ""
@@ -84,8 +84,7 @@
               "RelativeToolTip": "GraphWithLabels\\Models\\TableModels.cs",
               "ViewState": "AQIAAC8AAAAAAAAAAAAYwEMAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-08T08:37:54.046Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-08T08:37:54.046Z"
             },
             {
               "$type": "Document",

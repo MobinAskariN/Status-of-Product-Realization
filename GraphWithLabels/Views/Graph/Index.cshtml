@@ -16,7 +16,7 @@
     <style>
         #graph-container {
             border: 1px solid black;
-            width: 1100px;
+            width: 1300px;
             height: 500px;
             overflow: auto;
             position: relative;
@@ -24,19 +24,15 @@
 
         #doc-area {
             position: absolute;
-            top: 130px;
-            right: 10px;
-            width: 270px;
-            height: 300px;
+            visibility: hidden;
+            display: inline-block;
             background: white;
             border: 1px solid black;
             border-radius: 3px;
             padding: 5px;
-            display: flex;
-            flex-direction: column;
             direction: rtl; 
             text-align: right;
-            overflow: auto;
+            font-size: 15px;
         }
 
         .vertex {
@@ -65,11 +61,11 @@
 
         .label {
             font-size: 16px;
-            fill: #007BFF; /* Text color */
-            stroke: #0056b3; /* Border color */
-            stroke-width: 1px; /* Border width */
-            paint-order: stroke; /* Ensures the stroke is drawn before the fill */
-            stroke-linejoin: round; /* Smoothens the corners of the stroke */
+            fill: #007BFF; 
+            stroke: #0056b3; 
+            stroke-width: 1px; 
+            paint-order: stroke; 
+            stroke-linejoin: round; 
         }
 
         .zoom-controls {
@@ -105,7 +101,7 @@
     <h1>Graph</h1>
 
     <div id="graph-container">
-        <svg width="@svgWidth" height="@svgHeight" id="graph" viewBox="0 0 1300 500">
+        <svg width="@svgWidth" height="@svgHeight" id="graph" viewBox="0 0 @svgWidth 500">
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" />
@@ -139,20 +135,27 @@
                         color = "#00cc00";
                     }
 
-                    string tooltipContent = $"<strong>{HttpUtility.JavaScriptStringEncode(vertex.vertexName)}</strong><br>";
+                    string tooltipContent = "";
 
                     foreach (var doc in vertex.prepared_docTypes)
                     {
-                        tooltipContent += $"<span style='color:green;'>&nbsp;&nbsp;&nbsp;{HttpUtility.JavaScriptStringEncode(doc.Name)}&nbsp;&nbsp;&nbsp;{doc.precent}%</span><br>";
+                        tooltipContent += $"<span style='color:green;'>{HttpUtility.JavaScriptStringEncode(doc.Name)}&nbsp&nbsp&nbsp{doc.precent}% </span><br>";
                     }
 
                     foreach (var doc in vertex.unprepared_docTypes)
                     {
-                        tooltipContent += $"<span style='color:red;'>&nbsp;&nbsp;&nbsp;{HttpUtility.JavaScriptStringEncode(doc.Name)}&nbsp;&nbsp;&nbsp;{doc.precent}%</span><br>";
+                        tooltipContent += $"<span style='color:red;'>{HttpUtility.JavaScriptStringEncode(doc.Name)}&nbsp&nbsp&nbsp{doc.precent}% </span><br>";
                     }
 
+                    int n_docs = vertex.prepared_docTypes.Count + vertex.unprepared_docTypes.Count;
+                    if(n_docs == 0)
+                    {
+                        tooltipContent = "بدون سند";
+                    }
+                        
                     @Html.Raw($"<circle cx='{labelX}' cy='{cy}' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' fill='{color}' " +
-                             $"onmouseover=\"showTooltip(event, '{HttpUtility.JavaScriptStringEncode(tooltipContent)}')\" />")
+                             $"onmouseover=\"showTooltip(event, '{HttpUtility.JavaScriptStringEncode(tooltipContent)}')\"" +
+                             $"onmouseout=\"hideTooltip()\" onmousemove =\"updateTooltip(event)\"/>")
                     @Html.Raw($"<text x='{labelX}' y='{cy - 35}' class='vertex-text' fill='black' font-size='10' text-anchor='middle' dy='.3em'>{vertex.vertexName}</text>")
                     if (vertex.doc_percent != 100 && vertex.doc_percent != 0)
                         @Html.Raw($"<text x='{labelX}' y='{cy}' class='vertex-text' fill='black' font-size='18' text-anchor='middle' dy='.3em'>{vertex.doc_percent}%</text>")
@@ -212,11 +215,21 @@
         function showTooltip(evt, content) {
             const tooltip = document.getElementById('doc-area');
             tooltip.innerHTML = content;
+            updateTooltip(evt);
+            tooltip.style.visibility = "visible";
+        }
+
+        function updateTooltip(evt) {
+            const tooltip = document.getElementById('doc-area');
+            tooltip.style.left = (evt.pageX + 10) + 'px';
+            tooltip.style.top = (evt.pageY + 10) + 'px';
+
         }
 
         function hideTooltip() {
             const tooltip = document.getElementById('doc-area');
             tooltip.innerHTML = "";
+            tooltip.style.visibility = "hidden";
         }
 
     </script>
