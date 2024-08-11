@@ -105,6 +105,13 @@ namespace GraphWithLabels.Models
             return documents;
         }
 
+        public DocTypes? getDocTypes(int ID)
+        {
+            DocTypes? docTypes = _context.docTypes
+                                        .FirstOrDefault(s => s.ID == ID);
+            return docTypes;
+        }
+
 
         public List<int> extract_numbers(String s_numbers)
         {
@@ -145,5 +152,12 @@ namespace GraphWithLabels.Models
             return ans;
         }
 
+        public Dictionary<int, bool> create_dic(Dictionary<int, int> dic)
+        {
+            Dictionary<int, bool> ans = new Dictionary<int, bool>();
+            foreach (var key in  dic.Keys)
+                ans[key] = false;
+            return ans;
+        }
     }
 }

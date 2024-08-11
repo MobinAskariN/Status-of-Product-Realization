@@ -37,9 +37,12 @@ namespace GraphWithLabels.Controllers
             first_label.addVertex(first_v);
             labels.Add(first_label);
 
+            // setting doc informations
             if (first_station.requiredDocId != null)
             {
+                //         id , precent
                 Dictionary<int, int> required_doc = _context.required_doc(first_station.requiredDocId);
+                Dictionary<int, bool> prepared = _context.create_dic(required_doc);
 
                 foreach (Vertex v in first_label.vertices)
                 {
@@ -51,7 +54,17 @@ namespace GraphWithLabels.Controllers
                         if (required_doc.Keys.Contains(document.DOCTYPEID))
                         {
                             v.doc_percent += required_doc[document.DOCTYPEID];
+                            prepared[document.DOCTYPEID] = true;
                         }
+                    }
+                    foreach (var key in prepared.Keys)
+                    {
+                        DocTypes d = _context.getDocTypes(key);
+                        d.precent = required_doc[key];
+                        if (prepared[key] == true)
+                            v.prepared_docTypes.Add(d);
+                        else
+                            v.unprepared_docTypes.Add(d);
                     }
                 }
             }
@@ -159,8 +172,11 @@ namespace GraphWithLabels.Controllers
                     max_nv = Math.Max(max_nv, number_of_vertices);
                 }
 
+                // setting doc informations
                 if(station.requiredDocId != null) { 
+                    //         id , precent
                     Dictionary<int, int> required_doc = _context.required_doc(station.requiredDocId);
+                    Dictionary<int, bool> prepared = _context.create_dic(required_doc);
                     
                     foreach (Vertex v in current_label.vertices)
                     {
@@ -172,7 +188,17 @@ namespace GraphWithLabels.Controllers
                             if (required_doc.Keys.Contains(document.DOCTYPEID))
                             {
                                 v.doc_percent += required_doc[document.DOCTYPEID];
+                                prepared[document.DOCTYPEID] = true;
                             }
+                        }
+                        foreach (var key in prepared.Keys) 
+                        {
+                            DocTypes d = _context.getDocTypes(key);
+                            d.precent = required_doc[key];
+                            if (prepared[key] == true)
+                                v.prepared_docTypes.Add(d);
+                            else
+                                v.unprepared_docTypes.Add(d);
                         }
                     }
                 }

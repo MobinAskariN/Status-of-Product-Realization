@@ -11,7 +11,8 @@ namespace GraphWithLabels.Models
         public DbSet<TreeSectionCharts> treeSectionChart { get; set; }
         public DbSet<TreeSectionChartDocuments> treeSectionChartDocuments { get; set; }
         public DbSet<Documents> documents { get; set; }
-        
+        public DbSet<DocTypes> docTypes { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }

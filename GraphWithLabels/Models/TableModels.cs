@@ -52,17 +52,20 @@ namespace GraphWithLabels.Models
     public class DocTypes
     {
         public int ID { get; set; }
-        public int DocTypeGroupId { get; set; }
-        public int Count { get; set; }
+        //public int DocTypeGroupId { get; set; }
+        //public int Count { get; set; }
 
         public string Name { get; set; }
-        public string Code { get; set; }
+        //public string Code { get; set; }
         //public string Comment { get; set; }
         //public string TempFile { get; set; }
-        public string Color { get; set; }
-        public bool Active { get; set; }
-        public bool IsHistory { get; set; }
-        public bool IsAllowDownloadOther { get; set; }
+        //public string Color { get; set; }
+        //public bool Active { get; set; }
+        //public bool IsHistory { get; set; }
+        //public bool IsAllowDownloadOther { get; set; }
+
+        [NotMapped]
+        public int precent { get; set; }
     }
 
     [Table("Documents")]
