@@ -4,6 +4,11 @@
 Welcome to the Status of Product Realization project! This project demonstrates status of product realization graph visualization in an ASP.NET MVC application using .NET 8.
 This is actually my first project in my career.
 
+<video width="320" height="240" controls>
+  <source src="introduction_video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## Getting Started
 
 To set up and run this project, follow the steps below:

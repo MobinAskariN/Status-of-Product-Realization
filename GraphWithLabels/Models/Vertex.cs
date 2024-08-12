@@ -29,8 +29,8 @@ namespace GraphWithLabels.Models
                 labelIndex = this.labelIndex,
                 vertexIndex = this.vertexIndex,
                 vertexName = this.vertexName,
-                prepared_docTypes = this.prepared_docTypes,
-                unprepared_docTypes = this.unprepared_docTypes
+                prepared_docTypes = new List<DocTypes>(),
+                unprepared_docTypes = new List<DocTypes>()
             };
         }
     }

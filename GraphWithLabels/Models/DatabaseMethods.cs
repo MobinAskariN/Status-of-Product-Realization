@@ -108,7 +108,8 @@ namespace GraphWithLabels.Models
         public DocTypes? getDocTypes(int ID)
         {
             DocTypes? docTypes = _context.docTypes
-                                        .FirstOrDefault(s => s.ID == ID);
+                                          .AsNoTracking()
+                                          .FirstOrDefault(s => s.ID == ID);
             return docTypes;
         }
 

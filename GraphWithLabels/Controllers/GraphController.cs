@@ -42,10 +42,11 @@ namespace GraphWithLabels.Controllers
             {
                 //         id , precent
                 Dictionary<int, int> required_doc = _context.required_doc(first_station.requiredDocId);
-                Dictionary<int, bool> prepared = _context.create_dic(required_doc);
+                Dictionary<int, bool> prepared;
 
                 foreach (Vertex v in first_label.vertices)
                 {
+                    prepared = _context.create_dic(required_doc);
                     List<TreeSectionChartDocuments> treeSectionChartDocuments
                         = _context.getTreeSectionChartDocuments(v.id);
                     foreach (TreeSectionChartDocuments TreeDocument in treeSectionChartDocuments)
@@ -176,10 +177,11 @@ namespace GraphWithLabels.Controllers
                 if(station.requiredDocId != null) { 
                     //         id , precent
                     Dictionary<int, int> required_doc = _context.required_doc(station.requiredDocId);
-                    Dictionary<int, bool> prepared = _context.create_dic(required_doc);
+                    Dictionary<int, bool> prepared;
                     
                     foreach (Vertex v in current_label.vertices)
                     {
+                        prepared = _context.create_dic(required_doc);
                         List<TreeSectionChartDocuments> treeSectionChartDocuments 
                             = _context.getTreeSectionChartDocuments(v.id);
                         foreach (TreeSectionChartDocuments TreeDocument in treeSectionChartDocuments)
@@ -209,20 +211,8 @@ namespace GraphWithLabels.Controllers
                 stationId++;
             }
 
-            foreach (Label l in labels)
-            {
-                Console.WriteLine (l.name);
-                foreach(Vertex u in l.vertices)
-                {
-                    Console.WriteLine("\t" + u.labelIndex);
-                }
-            }
-            foreach((Vertex, Vertex) e in edges)
-                Console.WriteLine (e.Item1.id + " " + e.Item2.id);
-
-
             ViewBag.SvgWidth = labels.Count * 150;
-            ViewBag.Svgheight = max_nv * 120 + 300;
+            ViewBag.Svgheight = max_nv * 140 + 50;
             ViewBag.Labels = labels;
             ViewBag.Edges = edges;
             return View();

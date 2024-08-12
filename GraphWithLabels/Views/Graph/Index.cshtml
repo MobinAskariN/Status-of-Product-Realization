@@ -98,10 +98,10 @@
     </style>
 </head>
 <body>
-    <h1>Graph</h1>
+    <h2>Status of Product Realization</h2>
 
     <div id="graph-container">
-        <svg width="@svgWidth" height="@svgHeight" id="graph" viewBox="0 0 @svgWidth 500">
+        <svg width="@svgWidth" height="@svgHeight" id="graph" viewBox="0 0 @svgWidth @svgHeight">
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" />
@@ -111,14 +111,14 @@
             @foreach (var label in labels)
             {
                 var labelX = 60 + label.index * 150;
-                var labelY = -100;
+                var labelY = 20;
 
                 @Html.Raw($"<text x='{labelX}' y='{labelY}' class='label' text-anchor='middle'>{label.name}</text>")
 
-                int vertexSpacing = (svgHeight-300) / (label.vertices.Count + 1);
+                int vertexSpacing = (svgHeight-50) / (label.vertices.Count + 1);
                 for (int i = 0; i < label.vertices.Count; i++)
                 {
-                    var cy = vertexSpacing * (i + 1) - 50;
+                    var cy = vertexSpacing * (i + 1) + 50;
                     var vertex = label.vertices[i];
                     string color = "black";
 
@@ -165,9 +165,9 @@
             @foreach (var edge in edges)
             {
                 var startX = 60 + edge.Item1.labelIndex * 150 + 27;
-                var startY = -50 + (svgHeight-300) / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
+                var startY = +50 + (svgHeight-50) / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
                 var endX = 60 + edge.Item2.labelIndex * 150 - 27;
-                var endY = -50 + (svgHeight-300) / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
+                var endY = +50 + (svgHeight-50) / (labels[edge.Item2.labelIndex].vertices.Count + 1) * (edge.Item2.vertexIndex + 1);
 
                 @Html.Raw($"<line x1='{startX}' y1='{startY}' x2='{endX}' y2='{endY}' class='edge' marker-end='url(#arrowhead)' />")
             }
