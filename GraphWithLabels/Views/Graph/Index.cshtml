@@ -115,6 +115,8 @@
 
                 @Html.Raw($"<text x='{labelX}' y='{labelY}' class='label' text-anchor='middle'>{label.name}</text>")
 
+                // setting vertical space between vertices in a label
+                // if you want to change it remember to change drawing edge part too
                 int vertexSpacing = (svgHeight-50) / (label.vertices.Count + 1);
                 for (int i = 0; i < label.vertices.Count; i++)
                 {
@@ -122,6 +124,7 @@
                     var vertex = label.vertices[i];
                     string color = "black";
 
+                    // setting vertex color
                     if (vertex.doc_percent == 0)
                     {
                         color = "#cc0066";
@@ -135,24 +138,23 @@
                         color = "#00cc00";
                     }
 
+                    // setting doc message to show when mouse goes on a vertex
                     string tooltipContent = "";
-
-                    foreach (var doc in vertex.prepared_docTypes)
+                    foreach (var doc in vertex.prepared_docTypes)// prepared docs
                     {
                         tooltipContent += $"<span style='color:green;'>{HttpUtility.JavaScriptStringEncode(doc.Name)}&nbsp&nbsp&nbsp{doc.precent}% </span><br>";
                     }
-
-                    foreach (var doc in vertex.unprepared_docTypes)
+                    foreach (var doc in vertex.unprepared_docTypes)// unprepared docs
                     {
                         tooltipContent += $"<span style='color:red;'>{HttpUtility.JavaScriptStringEncode(doc.Name)}&nbsp&nbsp&nbsp{doc.precent}% </span><br>";
                     }
-
                     int n_docs = vertex.prepared_docTypes.Count + vertex.unprepared_docTypes.Count;
                     if(n_docs == 0)
                     {
                         tooltipContent = "بدون سند";
                     }
-                        
+                    
+                    // draw vertex with prepared informations
                     @Html.Raw($"<circle cx='{labelX}' cy='{cy}' class='vertex' data-label='{label.index}' data-vertex='{vertex.vertexIndex}' fill='{color}' " +
                              $"onmouseover=\"showTooltip(event, '{HttpUtility.JavaScriptStringEncode(tooltipContent)}')\"" +
                              $"onmouseout=\"hideTooltip()\" onmousemove =\"updateTooltip(event)\"/>")
@@ -162,8 +164,9 @@
                 }
             }
 
+            
             @foreach (var edge in edges)
-            {
+            {// now all of the vertices are drawn, and we start to draw edges
                 var startX = 60 + edge.Item1.labelIndex * 150 + 27;
                 var startY = +50 + (svgHeight-50) / (labels[edge.Item1.labelIndex].vertices.Count + 1) * (edge.Item1.vertexIndex + 1);
                 var endX = 60 + edge.Item2.labelIndex * 150 - 27;
@@ -175,6 +178,7 @@
     </div>
     <div id="doc-area"></div>
 
+    <!-- zoom button area -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="zoom-controls">
         <button onclick="zoomIn()">

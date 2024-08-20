@@ -4,15 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraphWithLabels.Models
 {
+    // in this class there are table models. so if you rename a column name remember to 
+    // change it here too. and if there are some extera data in models feel free to erase it.
+    [Table("Station")]
     public class Station
     {
+        [Key]
         public int stationId { get; set; }  // Maps to the primary key in your table
         public string stationName { get; set; }  // Maps to the stationName column
         public int layerId { get; set; }
         public string? requiredDocId { get; set; }
     }
 
-    
+    [Table("Layer")]
     public class Layer
     {
         [Key]
@@ -23,11 +27,11 @@ namespace GraphWithLabels.Models
         public int layerLevel { get; set; }
     }
 
+    [Table("SectionTypes")]
     public class SectionTypes
     {
         public int ID { get; set; }
         public string TypeName {  get; set; }
-        // color
     }
 
     [Keyless]

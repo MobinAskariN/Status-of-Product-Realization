@@ -41,7 +41,7 @@ namespace GraphWithLabels.Models
             return treeSectionCharts;
         }
 
-        public bool is_child(int childId, int? parentId)
+        public bool is_child(int childId, int? parentId)// check if a node is a child of another node or not
         {
             if (parentId == null)
             {
@@ -66,7 +66,7 @@ namespace GraphWithLabels.Models
             return result;
         }
 
-        public bool is_parent(int childId, int? parentId)
+        public bool is_parent(int childId, int? parentId)// check if a node is a parent of another node or not
         {
             if (parentId == null)
             {
@@ -115,7 +115,7 @@ namespace GraphWithLabels.Models
 
 
         public List<int> extract_numbers(String s_numbers)
-        {
+        {// extract numbers from a string. between numbers there are cama(,)
             string[] numberStrings = s_numbers.Split(',');
             List<int> numbers = new List<int>();
             foreach (string numberString in numberStrings)
@@ -134,7 +134,7 @@ namespace GraphWithLabels.Models
         }
 
         public Dictionary<int, int> required_doc(String s_doc)
-        {  
+        {// extract a dictionary from a string. the format is like this -> n1,n2;n3,n4  
             Dictionary<int, int> ans = new Dictionary<int, int>();
 
             string[] partStrings = s_doc.Split(';');
@@ -154,7 +154,7 @@ namespace GraphWithLabels.Models
         }
 
         public Dictionary<int, bool> create_dic(Dictionary<int, int> dic)
-        {
+        {// create dictionary with same keys as 'dic' and a default value 'false'
             Dictionary<int, bool> ans = new Dictionary<int, bool>();
             foreach (var key in  dic.Keys)
                 ans[key] = false;

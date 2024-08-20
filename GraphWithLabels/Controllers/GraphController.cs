@@ -18,6 +18,8 @@ namespace GraphWithLabels.Controllers
         {
             var labels = new List<Label>();
             var edges = new List<(Vertex, Vertex)>();
+            // maximum number of vertices in a label in set of labels.
+            // it is used for setting proper height for svg container
             int max_nv = 1;
 
             int stationId = 1;
@@ -37,16 +39,18 @@ namespace GraphWithLabels.Controllers
             first_label.addVertex(first_v);
             labels.Add(first_label);
 
-            // setting doc informations
+            // setting doc informations for the first station
             if (first_station.requiredDocId != null)
             {
-                //         id , precent
+                // extract documents from a string. notice that it can be different according to the format that your string is written
+                //        <id , precent>
                 Dictionary<int, int> required_doc = _context.required_doc(first_station.requiredDocId);
+                //        <id , is the doc prepared?>
                 Dictionary<int, bool> prepared;
 
                 foreach (Vertex v in first_label.vertices)
                 {
-                    prepared = _context.create_dic(required_doc);
+                    prepared = _context.create_dic(required_doc);// create a dictionary with same keys as 'required_doc'
                     List<TreeSectionChartDocuments> treeSectionChartDocuments
                         = _context.getTreeSectionChartDocuments(v.id);
                     foreach (TreeSectionChartDocuments TreeDocument in treeSectionChartDocuments)
@@ -174,9 +178,11 @@ namespace GraphWithLabels.Controllers
                 }
 
                 // setting doc informations
-                if(station.requiredDocId != null) { 
-                    //         id , precent
+                if(station.requiredDocId != null) {
+                    // extract documents from a string. notice that it can be different according to the format that your string is written
+                    //        <id , precent>
                     Dictionary<int, int> required_doc = _context.required_doc(station.requiredDocId);
+                    //        <id , is the doc prepared?>
                     Dictionary<int, bool> prepared;
                     
                     foreach (Vertex v in current_label.vertices)
