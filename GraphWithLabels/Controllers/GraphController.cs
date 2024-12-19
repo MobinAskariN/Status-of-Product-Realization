@@ -60,6 +60,7 @@ namespace GraphWithLabels.Controllers
                         {
                             v.doc_percent += required_doc[document.DOCTYPEID];
                             prepared[document.DOCTYPEID] = true;
+                            Console.WriteLine(required_doc[document.DOCTYPEID]);
                         }
                     }
                     foreach (var key in prepared.Keys)

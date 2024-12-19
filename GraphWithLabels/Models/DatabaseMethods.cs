@@ -140,7 +140,7 @@ namespace GraphWithLabels.Models
             string[] partStrings = s_doc.Split(';');
             foreach(string s in partStrings)
             {
-                string[] n = s.Split(",");
+                string[] n = s.Split(',');
                 if (int.TryParse(n[0], out int number1) && int.TryParse(n[1], out int number2))
                 {
                     ans.Add(number1, number2);

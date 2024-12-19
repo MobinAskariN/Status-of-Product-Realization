@@ -3,28 +3,32 @@
   "WorkspaceRootPath": "E:\\code source!\\csharp project\\akhlagh-project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\models\\vertex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\models\\vertex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\controllers\\graphcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\controllers\\graphcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\models\\tablemodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\models\\tablemodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\models\\label.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\models\\label.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\models\\databasemethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\models\\databasemethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|e:\\code source!\\csharp project\\akhlagh-project\\graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6257B69A-E04E-47BA-8D2D-4771234BBFEA}|GraphWithLabels\\GraphWithLabels.csproj|solutionrelative:graphwithlabels\\views\\graph\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,53 +43,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ErrorViewModel.cs",
-              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\ErrorViewModel.cs",
-              "RelativeDocumentMoniker": "GraphWithLabels\\Models\\ErrorViewModel.cs",
-              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\ErrorViewModel.cs",
-              "RelativeToolTip": "GraphWithLabels\\Models\\ErrorViewModel.cs",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\appsettings.json",
+              "RelativeDocumentMoniker": "GraphWithLabels\\appsettings.json",
+              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\appsettings.json",
+              "RelativeToolTip": "GraphWithLabels\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-20T10:16:11.349Z",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-12-19T14:26:08.672Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "GraphWithLabels\\Models\\ApplicationDbContext.cs",
-              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\ApplicationDbContext.cs",
-              "RelativeToolTip": "GraphWithLabels\\Models\\ApplicationDbContext.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Program.cs",
+              "RelativeDocumentMoniker": "GraphWithLabels\\Program.cs",
+              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Program.cs",
+              "RelativeToolTip": "GraphWithLabels\\Program.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-20T10:15:16.595Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "RelativeDocumentMoniker": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "RelativeToolTip": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
-              "ViewState": "AQIAAIIAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-20T10:12:49.245Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GraphController.cs",
-              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Controllers\\GraphController.cs",
-              "RelativeDocumentMoniker": "GraphWithLabels\\Controllers\\GraphController.cs",
-              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Controllers\\GraphController.cs",
-              "RelativeToolTip": "GraphWithLabels\\Controllers\\GraphController.cs",
-              "ViewState": "AQIAALQAAAAAAAAAAAAAALgAAAA5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-28T09:40:44.771Z",
+              "WhenOpened": "2024-12-19T14:25:58.419Z",
               "EditorCaption": ""
             },
             {
@@ -96,22 +74,61 @@
               "RelativeDocumentMoniker": "GraphWithLabels\\Models\\Vertex.cs",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\Vertex.cs",
               "RelativeToolTip": "GraphWithLabels\\Models\\Vertex.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAwwBUAAAAJAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T10:22:38.335Z",
+              "WhenOpened": "2024-12-19T14:25:48.917Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
+              "Title": "TableModels.cs",
+              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\TableModels.cs",
+              "RelativeDocumentMoniker": "GraphWithLabels\\Models\\TableModels.cs",
+              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\TableModels.cs",
+              "RelativeToolTip": "GraphWithLabels\\Models\\TableModels.cs",
+              "ViewState": "AQIAAGMAAAAAAAAAAAAIwGkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-19T14:23:55.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Label.cs",
               "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\Label.cs",
               "RelativeDocumentMoniker": "GraphWithLabels\\Models\\Label.cs",
               "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\Label.cs",
               "RelativeToolTip": "GraphWithLabels\\Models\\Label.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAA3wBcAAAAAAAAA",
+              "ViewState": "AQIAABEAAAAAAAAAAAAgwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T10:03:03.067Z",
+              "WhenOpened": "2024-12-19T14:23:52.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DatabaseMethods.cs",
+              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\DatabaseMethods.cs",
+              "RelativeDocumentMoniker": "GraphWithLabels\\Models\\DatabaseMethods.cs",
+              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Models\\DatabaseMethods.cs",
+              "RelativeToolTip": "GraphWithLabels\\Models\\DatabaseMethods.cs",
+              "ViewState": "AQIAAJMAAAAAAAAAAAAiwJwAAABRAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-19T14:22:27.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "RelativeDocumentMoniker": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "ToolTip": "E:\\code source!\\csharp project\\akhlagh-project\\GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "RelativeToolTip": "GraphWithLabels\\Views\\Graph\\Index.cshtml",
+              "ViewState": "AQIAAOYAAAAAAAAAAAAAANIAAABMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-02T11:11:50.91Z",
               "EditorCaption": ""
             }
           ]
