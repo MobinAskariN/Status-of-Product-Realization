@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GraphWithLabels.Models
+﻿namespace GraphWithLabels.Models
 {
     public class Label
     {

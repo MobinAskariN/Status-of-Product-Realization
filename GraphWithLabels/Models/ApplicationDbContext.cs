@@ -5,15 +5,18 @@ namespace GraphWithLabels.Models
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Station> station { get; set; }
-        public DbSet<Layer> layer { get; set; }
-        public DbSet<SectionTypes> sectionType { get; set; }
-        public DbSet<SectionTypeTreeSectionCharts> sectionTypeTreeSectionChart { get; set; }
-        public DbSet<TreeSectionCharts> treeSectionChart { get; set; }
-        public DbSet<TreeSectionChartDocuments> treeSectionChartDocuments { get; set; }
-        public DbSet<Documents> documents { get; set; }
-        public DbSet<DocTypes> docTypes { get; set; }
+        public DbSet<DocTypes> StationNode { get; set; }
+        public DbSet<DocTypes> DocInfo { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Tell EF Core these are DTOs with no keys
+            modelBuilder.Entity<StationNode>().HasNoKey();
+            modelBuilder.Entity<DocInfo>().HasNoKey();
+        }
     }
 }

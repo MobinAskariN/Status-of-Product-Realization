@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace GraphWithLabels.Models
+﻿namespace GraphWithLabels.Models
 {
     public class Vertex
     {

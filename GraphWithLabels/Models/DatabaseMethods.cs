@@ -1,164 +1,272 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using static System.Collections.Specialized.BitVector32;
 
 namespace GraphWithLabels.Models
 {
     public class DatabaseMethods
     {
         private readonly ApplicationDbContext _context;
-
         public DatabaseMethods(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public Station? getStation(int stationId)
+        public List<Station> getStations()
         {
-            Station? station = _context.station
-                           .FirstOrDefault(s => s.stationId == stationId);
+            List<Station> station = _context.station.ToList();
             return station;
         }
 
-        public Layer? getLayer(int layerId)
+        public List<StationNode> getStationNodes_con(int stationId)
         {
-            Layer? layer = _context.layer
-                                   .FirstOrDefault(s => s.intLayerTypeId == layerId);
-            return layer;
+            string sql = @"
+                SELECT
+                  station.stationName as StationName,
+                  TreeSectionCharts.ID AS ParentID,
+                  child.SectionName,
+                  child.ID as NodeID
+                FROM
+                  dbo.station
+                  INNER JOIN dbo.layer ON station.layerID = layer.intLayerTypeID
+                  INNER JOIN dbo.SectionTypes ON layer.sectionTypeID = SectionTypes.ID
+                  INNER JOIN dbo.SectionTypeTreeSectionCharts ON SectionTypes.ID = SectionTypeTreeSectionCharts.SectionType_ID
+                  INNER JOIN dbo.TreeSectionCharts ON SectionTypeTreeSectionCharts.TreeSectionChart_ID = TreeSectionCharts.ID
+                  LEFT JOIN dbo.TreeSectionCharts AS child ON TreeSectionCharts.ParentID = child.ID 
+                WHERE
+                    station.stationID = {0}";
+
+            return _context.Set<StationNode>().FromSqlRaw(sql, stationId).ToList();
         }
 
-        public List<SectionTypeTreeSectionCharts> getSectionTypeTreeSectionCharts(int sectionType_ID)
+        public List<StationNode> getStationNodes_div(int stationId)
         {
-            return _context.sectionTypeTreeSectionChart
-                           .Where(p => p.SectionType_ID == sectionType_ID)
-                           .ToList();
+            string sql = @"
+                SELECT
+                  station.StationName,
+                  TreeSectionCharts.ID AS NodeID,
+                  TreeSectionCharts.SectionName,
+                  TreeSectionCharts.ParentID 
+                FROM dbo.station
+                INNER JOIN dbo.layer ON station.layerID = layer.intLayerTypeID
+                INNER JOIN dbo.SectionTypes ON layer.sectionTypeID = SectionTypes.ID
+                INNER JOIN dbo.SectionTypeTreeSectionCharts ON SectionTypes.ID = SectionTypeTreeSectionCharts.SectionType_ID
+                INNER JOIN dbo.TreeSectionCharts ON SectionTypeTreeSectionCharts.TreeSectionChart_ID = TreeSectionCharts.ID 
+                WHERE station.stationID = {0}";
+
+            return _context.Set<StationNode>().FromSqlRaw(sql, stationId).ToList();
         }
 
-        public TreeSectionCharts? getTreeSectionCharts(int ID)
+        public List<StationNode> getStationNodes_fix(int stationId)
         {
-            TreeSectionCharts? treeSectionCharts = _context.treeSectionChart
-                                                    .FirstOrDefault(s => s.ID == ID);
-            return treeSectionCharts;
+            string sql = @"
+                SELECT
+	                station.stationName, 
+	                TreeSectionCharts.ID AS NodeID, 
+	                TreeSectionCharts.SectionName, 
+	                TreeSectionCharts.ID AS ParentID
+                FROM
+	                dbo.station
+	                INNER JOIN
+	                dbo.layer
+	                ON 
+		                station.layerID = layer.intLayerTypeID
+	                INNER JOIN
+                dbo.SectionTypes ON layer.sectionTypeID = SectionTypes.ID
+                INNER JOIN dbo.SectionTypeTreeSectionCharts
+	                ON 
+		                SectionTypes.ID = SectionTypeTreeSectionCharts.SectionType_ID
+	                INNER JOIN
+	                dbo.TreeSectionCharts
+	                ON 
+		                SectionTypeTreeSectionCharts.TreeSectionChart_ID = TreeSectionCharts.ID
+                WHERE
+	                station.stationID = {0}";
+
+            return _context.Set<StationNode>().FromSqlRaw(sql, stationId).ToList();
         }
 
-        public bool is_child(int childId, int? parentId)// check if a node is a child of another node or not
+        public List<DocInfo> getDocInfos_con(int stationId)
         {
-            if (parentId == null)
-            {
-                return false;
-            }
+            string sql = @"
+                WITH reqDoc AS (
+                  SELECT
+                    CAST(ltrim(RTRIM(PARSENAME(REPLACE(VALUE, ',', '.'), 2))) AS INT) AS reqDocTypeID,
+                    CAST(ltrim(RTRIM(PARSENAME(REPLACE(VALUE, ',', '.'), 1))) AS INT) AS weight
+                  FROM
+                    string_split ( ( SELECT requiredDocID FROM station WHERE stationID = {0} ), ';' ) -- here
+  
+                ),
+                stationNode AS (
+                  SELECT
+                    station.stationName AS StationName,
+                    TreeSectionCharts.ID AS ParentID,
+                    child.SectionName,
+                    child.ID AS NodeID 
+                  FROM
+                    dbo.station
+                    INNER JOIN dbo.layer ON station.layerID = layer.intLayerTypeID
+                    INNER JOIN dbo.SectionTypes ON layer.sectionTypeID = SectionTypes.ID
+                    INNER JOIN dbo.SectionTypeTreeSectionCharts ON SectionTypes.ID = SectionTypeTreeSectionCharts.SectionType_ID
+                    INNER JOIN dbo.TreeSectionCharts ON SectionTypeTreeSectionCharts.TreeSectionChart_ID = TreeSectionCharts.ID
+                    LEFT JOIN dbo.TreeSectionCharts AS child ON TreeSectionCharts.ParentID = child.ID 
+                  WHERE
+                    station.stationID = {0} -- here
+    
+                  ),
+                  requiredDoc AS ( SELECT reqDocTypeID, weight, nodeID FROM reqDoc, stationNode ),
+                  approvedDoc AS (
+                  SELECT DISTINCT
+                    stationNode.nodeID,
+                    DocTypes.ID AS appDocTypeID 
+                  FROM
+                    Documents
+                    INNER JOIN DocTypes ON Documents.DOCTYPEID = DocTypes.ID
+                    INNER JOIN TreeSectionChartDocuments ON Documents.ID = TreeSectionChartDocuments.Document_ID
+                    INNER JOIN stationNode ON stationNode.NodeID = TreeSectionChartDocuments.TreeSectionChart_ID 
+                  ),
+                  comparedDoc AS (
+                  SELECT
+                    requiredDoc.reqDocTypeID,
+                    requiredDoc.weight,
+                    requiredDoc.nodeID,
+                    approvedDoc.appDocTypeID 
+                  FROM
+                    approvedDoc
+                    RIGHT JOIN requiredDoc ON approvedDoc.nodeID = requiredDoc.nodeID 
+                    AND approvedDoc.appDocTypeID = requiredDoc.reqDocTypeID 
+                  ) SELECT DISTINCT
+                  comparedDoc.reqDocTypeID,
+                  doctypes.Name,
+                  comparedDoc.weight,
+                  comparedDoc.nodeID,
+                  comparedDoc.appDocTypeID 
+                FROM
+                  comparedDoc
+                  INNER JOIN DocTypes ON comparedDoc.reqDocTypeID = doctypes.ID";
 
-            var result = _context.treeSectionChart
-                .FromSqlRaw(@"
-            WITH Ancestors AS (
-                SELECT ID, SectionName, ParentID
-                FROM TreeSectionCharts
-                WHERE ID = {0}
-                UNION ALL
-                SELECT t.ID, t.SectionName, t.ParentID
-                FROM TreeSectionCharts t
-                INNER JOIN Ancestors a ON t.ID = a.ParentID
-            )
-            SELECT ID, SectionName, ParentID FROM Ancestors WHERE ID = {1}", childId, parentId.Value)
-                .ToList()
-                .Any();
+            var result = _context.Set<DocInfo>().FromSqlRaw(sql, stationId).ToList();
+            return result;
+        }
+        public List<DocInfo> getDocInfos_div(int stationId)
+        {
+            string sql = @"
+                WITH reqDoc AS (
+                  SELECT 
+                    CAST(ltrim(RTRIM(PARSENAME(REPLACE(VALUE, ',', '.'), 2))) AS INT) AS reqDocTypeID,
+                    CAST(ltrim(RTRIM(PARSENAME(REPLACE(VALUE, ',', '.'), 1))) AS INT) AS weight
+                  FROM
+                    string_split ( ( SELECT requiredDocID FROM station WHERE stationID = {0} ), ';' )  
+                ),
+                stationNode AS (
+                  SELECT
+                    station.stationName,
+                    TreeSectionCharts.ID AS nodeID,
+                    TreeSectionCharts.SectionName,
+                    TreeSectionCharts.ParentID 
+                  FROM
+                    station
+                    INNER JOIN layer ON station.layerID = layer.intLayerTypeID
+                    INNER JOIN SectionTypes ON layer.sectionTypeID = SectionTypes.ID
+                    INNER JOIN SectionTypeTreeSectionCharts ON SectionTypes.ID = SectionTypeTreeSectionCharts.SectionType_ID
+                    INNER JOIN TreeSectionCharts ON SectionTypeTreeSectionCharts.TreeSectionChart_ID = TreeSectionCharts.ID 
+                  WHERE
+                    station.stationID = {0} 
+                  ),
+                  requiredDoc AS ( SELECT reqDocTypeID, weight, nodeID FROM reqDoc, stationNode ),
+                  approvedDoc AS (
+                  SELECT DISTINCT
+                    stationNode.nodeID,
+                    DocTypes.ID AS appDocTypeID
+                  FROM
+                    Documents
+                    INNER JOIN DocTypes ON Documents.DOCTYPEID = DocTypes.ID
+                    INNER JOIN TreeSectionChartDocuments ON Documents.ID = TreeSectionChartDocuments.Document_ID
+                    INNER JOIN stationNode ON stationNode.nodeID = TreeSectionChartDocuments.TreeSectionChart_ID 
+                  ),
+                  comparedDoc AS (
+                  SELECT
+                    requiredDoc.reqDocTypeID,
+                    requiredDoc.weight,
+                    requiredDoc.nodeID,
+                    approvedDoc.appDocTypeID
+                  FROM
+                    approvedDoc
+                    RIGHT JOIN requiredDoc ON approvedDoc.nodeID = requiredDoc.nodeID 
+                    AND approvedDoc.appDocTypeID = requiredDoc.reqDocTypeID 
+                  ) SELECT
+                  comparedDoc.reqDocTypeID,
+                  doctypes.Name, 
+                  comparedDoc.weight,
+                  comparedDoc.nodeID,
+                  comparedDoc.appDocTypeID
+                FROM
+                  comparedDoc
+                  INNER JOIN
+                  DocTypes on comparedDoc.reqDocTypeID = doctypes.ID";
 
+            var result = _context.Set<DocInfo>().FromSqlRaw(sql, stationId).ToList();
+            return result;
+        }
+        public List<DocInfo> getDocInfos_fix(int stationId)
+        {
+            string sql = @"
+                WITH reqDoc AS (
+                  SELECT
+                    CAST(ltrim(RTRIM(PARSENAME(REPLACE(VALUE, ',', '.'), 2))) AS INT) AS reqDocTypeID,
+                    CAST(ltrim(RTRIM(PARSENAME(REPLACE(VALUE, ',', '.'), 1))) AS INT) AS weight
+                  FROM
+                    string_split ( ( SELECT requiredDocID FROM station WHERE stationID = {0} ), ';' )  -- here
+                ),
+                stationNode AS (
+                  SELECT
+                    station.stationName,
+                    TreeSectionCharts.ID AS nodeID,
+                    TreeSectionCharts.SectionName,
+                    TreeSectionCharts.ID AS ParentID
+                  FROM
+                    station
+                    INNER JOIN layer ON station.layerID = layer.intLayerTypeID
+                    INNER JOIN SectionTypes ON layer.sectionTypeID = SectionTypes.ID
+                    INNER JOIN SectionTypeTreeSectionCharts ON SectionTypes.ID = SectionTypeTreeSectionCharts.SectionType_ID
+                    INNER JOIN TreeSectionCharts ON SectionTypeTreeSectionCharts.TreeSectionChart_ID = TreeSectionCharts.ID 
+                  WHERE
+                    station.stationID = {0}  -- here
+                  ),
+                  requiredDoc AS ( SELECT reqDocTypeID, weight, nodeID FROM reqDoc, stationNode ),
+                  approvedDoc AS (
+                  SELECT DISTINCT
+                    stationNode.nodeID,
+                    DocTypes.ID AS appDocTypeID
+                  FROM
+                    Documents
+                    INNER JOIN DocTypes ON Documents.DOCTYPEID = DocTypes.ID
+                    INNER JOIN TreeSectionChartDocuments ON Documents.ID = TreeSectionChartDocuments.Document_ID
+                    INNER JOIN stationNode ON stationNode.nodeID = TreeSectionChartDocuments.TreeSectionChart_ID 
+                  ),
+                  comparedDoc AS (
+                  SELECT
+                    requiredDoc.reqDocTypeID,
+                    requiredDoc.weight,
+                    requiredDoc.nodeID,
+                    approvedDoc.appDocTypeID
+                  FROM
+                    approvedDoc
+                    RIGHT JOIN requiredDoc ON approvedDoc.nodeID = requiredDoc.nodeID 
+                    AND approvedDoc.appDocTypeID = requiredDoc.reqDocTypeID 
+                  ) SELECT
+                  comparedDoc.reqDocTypeID,
+                  doctypes.Name, 
+                  comparedDoc.weight,
+                  comparedDoc.nodeID,
+                  comparedDoc.appDocTypeID
+                FROM
+                  comparedDoc
+                  INNER JOIN
+                  DocTypes on comparedDoc.reqDocTypeID = doctypes.ID";
+
+            var result = _context.Set<DocInfo>().FromSqlRaw(sql, stationId).ToList();
             return result;
         }
 
-        public bool is_parent(int childId, int? parentId)// check if a node is a parent of another node or not
-        {
-            if (parentId == null)
-            {
-                return false;
-            }
 
-            var result = _context.treeSectionChart
-                .FromSqlRaw(@"
-            WITH Descendants AS (
-                SELECT ID, SectionName, ParentID
-                FROM TreeSectionCharts
-                WHERE ID = {0}
-                UNION ALL
-                SELECT t.ID, t.SectionName, t.ParentID
-                FROM TreeSectionCharts t
-                INNER JOIN Descendants d ON t.ID = d.ParentID
-            )
-            SELECT ID, SectionName, ParentID FROM Descendants WHERE ID = {1}", childId, parentId)
-            .ToList()
-            .Any();
-
-            return result;
-        }
-
-        public List<TreeSectionChartDocuments> getTreeSectionChartDocuments(int treeSectionChart_ID)
-        {
-            return _context.treeSectionChartDocuments
-                           .Where(p => p.TreeSectionChart_ID == treeSectionChart_ID)
-                           .ToList();
-        }
-
-        public Documents? getDocument(int ID)
-        {
-            Documents? documents = _context.documents
-                                           .FirstOrDefault(s => s.ID == ID);
-            return documents;
-        }
-
-        public DocTypes? getDocTypes(int ID)
-        {
-            DocTypes? docTypes = _context.docTypes
-                                          .AsNoTracking()
-                                          .FirstOrDefault(s => s.ID == ID);
-            return docTypes;
-        }
-
-
-        public List<int> extract_numbers(String s_numbers)
-        {// extract numbers from a string. between numbers there are cama(,)
-            string[] numberStrings = s_numbers.Split(',');
-            List<int> numbers = new List<int>();
-            foreach (string numberString in numberStrings)
-            {
-                if (int.TryParse(numberString, out int number))
-                {
-                    numbers.Add(number);
-                }
-                else
-                {
-                    Console.WriteLine($"'{numberString}' is not a valid number.");
-                }
-            }
-
-            return numbers;
-        }
-
-        public Dictionary<int, int> required_doc(String s_doc)
-        {// extract a dictionary from a string. the format is like this -> n1,n2;n3,n4  
-            Dictionary<int, int> ans = new Dictionary<int, int>();
-
-            string[] partStrings = s_doc.Split(';');
-            foreach(string s in partStrings)
-            {
-                string[] n = s.Split(',');
-                if (int.TryParse(n[0], out int number1) && int.TryParse(n[1], out int number2))
-                {
-                    ans.Add(number1, number2);
-                }
-                else
-                {
-                    Console.WriteLine($"'{n[0]}' || '{n[1]}' is not a valid number.");
-                }
-            }
-            return ans;
-        }
-
-        public Dictionary<int, bool> create_dic(Dictionary<int, int> dic)
-        {// create dictionary with same keys as 'dic' and a default value 'false'
-            Dictionary<int, bool> ans = new Dictionary<int, bool>();
-            foreach (var key in  dic.Keys)
-                ans[key] = false;
-            return ans;
-        }
     }
 }

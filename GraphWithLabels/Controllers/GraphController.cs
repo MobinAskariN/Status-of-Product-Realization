@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GraphWithLabels.Models;
-using System.Collections.Generic;
-using static System.Collections.Specialized.BitVector32;
 
 namespace GraphWithLabels.Controllers
 {
@@ -22,201 +20,94 @@ namespace GraphWithLabels.Controllers
             // it is used for setting proper height for svg container
             int max_nv = 1;
 
-            int stationId = 1;
-            int previous_layerId;
+            List<Station> stations = _context.getStations();
+            Dictionary<int, Vertex> dic_id_v_parent = new Dictionary<int, Vertex>(); // keeps previous label vertieces
+            Dictionary<int, Vertex> dic_id_v_label = new Dictionary<int, Vertex>(); // keeps current label vertieces
+            int previous_layerId = -1;
+            int previous_stationId = -1;
 
-            // stationId = 1
-            Station? first_station = _context.getStation(stationId);
-            Layer? first_layer = _context.getLayer(first_station.layerId);
-            List<SectionTypeTreeSectionCharts> first_sectionTree 
-                    = _context.getSectionTypeTreeSectionCharts(Int32.Parse(first_layer.sectionTypeId));
-            TreeSectionCharts? first_treeSectionCharts = _context.getTreeSectionCharts(first_sectionTree.First().TreeSectionChart_ID);
-            
-            Label first_label = new Label(first_station.stationName);
-            Vertex first_v = new Vertex(first_label.index, first_treeSectionCharts.SectionName);
-            first_v.id = first_sectionTree.First().TreeSectionChart_ID;
-            first_v.vertexIndex = 0;
-            first_label.addVertex(first_v);
-            labels.Add(first_label);
 
-            // setting doc informations for the first station
-            if (first_station.requiredDocId != null)
+            foreach (Station station in stations)
             {
-                // extract documents from a string. notice that it can be different according to the format that your string is written
-                //        <id , precent>
-                Dictionary<int, int> required_doc = _context.required_doc(first_station.requiredDocId);
-                //        <id , is the doc prepared?>
-                Dictionary<int, bool> prepared;
-
-                foreach (Vertex v in first_label.vertices)
+                List<StationNode> stationNodes;
+                List<DocInfo> docInfos;
+                if (previous_layerId == -1 || previous_layerId < station.layerId) // vagara
                 {
-                    prepared = _context.create_dic(required_doc);// create a dictionary with same keys as 'required_doc'
-                    List<TreeSectionChartDocuments> treeSectionChartDocuments
-                        = _context.getTreeSectionChartDocuments(v.id);
-                    foreach (TreeSectionChartDocuments TreeDocument in treeSectionChartDocuments)
-                    {
-                        Documents? document = _context.getDocument(TreeDocument.Document_ID);
-                        if (required_doc.Keys.Contains(document.DOCTYPEID))
-                        {
-                            v.doc_percent += required_doc[document.DOCTYPEID];
-                            prepared[document.DOCTYPEID] = true;
-                            Console.WriteLine(required_doc[document.DOCTYPEID]);
-                        }
-                    }
-                    foreach (var key in prepared.Keys)
-                    {
-                        DocTypes d = _context.getDocTypes(key);
-                        d.precent = required_doc[key];
-                        if (prepared[key] == true)
-                            v.prepared_docTypes.Add(d);
-                        else
-                            v.unprepared_docTypes.Add(d);
-                    }
+                    stationNodes = _context.getStationNodes_div(station.stationId);
+                    docInfos = _context.getDocInfos_div(station.stationId);
                 }
-            }
-
-
-            stationId++;
-            previous_layerId = first_station.layerId;
-            max_nv = Math.Max(max_nv, 1);
-
-            while (true) // stationId >= 2
-            {
-                var station = _context.getStation(stationId);
-                if (station == null)
-                    break;
-
-                Label current_label = new Label(station.stationName);
-
-                if(previous_layerId == station.layerId) // jaryan sabet
+                else if (previous_layerId == station.layerId) // sabet
                 {
-                    current_label.vertices = labels.Last().vertices.Select(v => v.Copy()).ToList();
-                    foreach (var v in current_label.vertices)
-                        v.labelIndex = current_label.index;
-                    
-                    for(int i = 0; i < labels.Last().vertices.Count; i++)
-                    {
-                        edges.Add((labels.Last().vertices[i], current_label.vertices[i]));
-                    }
-                }
-                else if(station.layerId > previous_layerId) // jaryan vagara
+                    stationNodes = _context.getStationNodes_fix(station.stationId);
+                    docInfos = _context.getDocInfos_fix(station.stationId);
+                } 
+                else // hamgara
                 {
-                    var layer = _context.getLayer(station.layerId);                                       
-                    List<int> numbers = _context.extract_numbers(layer.sectionTypeId);
-
-                    int number_of_vertices = 0;
-                    foreach (int sectionType_ID in numbers)
-                    {
-                        List<SectionTypeTreeSectionCharts> sectionTypeTreeSectionCharts 
-                                = _context.getSectionTypeTreeSectionCharts(sectionType_ID);
-                        number_of_vertices += sectionTypeTreeSectionCharts.Count;
-
-                        for (int i = 0; i <  sectionTypeTreeSectionCharts.Count; i++)
-                        {
-                            TreeSectionCharts? treeSectionCharts
-                                = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
-                            Vertex v = new Vertex(current_label.index, treeSectionCharts.SectionName);
-                            v.id = sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID;
-                            current_label.addVertex(v);
-
-                            bool has_set = false;
-                            int j = 0;
-                            foreach (Vertex u in labels.Last().vertices)
-                            {
-                                if (_context.is_child(v.id, u.id))
-                                {
-                                    if (has_set == false)
-                                    {
-                                        v.vertexIndex = j;
-                                        has_set = true;
-                                    }
-                                    edges.Add((u, v));
-                                }
-                                j++;
-                            }
-                        }
-                    }
-                    max_nv = Math.Max(max_nv, number_of_vertices);
+                    stationNodes = _context.getStationNodes_con(previous_stationId);
+                    docInfos = _context.getDocInfos_con(previous_stationId);
                 }
-                else // jaryan hamgera
+                Label label = new Label(station.stationName);
+                int v_index = 0;
+                max_nv = Math.Max(max_nv, stationNodes.Count);
+
+
+
+                foreach (StationNode stationNode in stationNodes) // creating nodes
                 {
-                    var layer = _context.getLayer(station.layerId);
-                    List<int> numbers = _context.extract_numbers(layer.sectionTypeId);
-
-                    int number_of_vertices = 0;
-                    foreach (int sectionType_ID in numbers)
+                    if (!dic_id_v_label.ContainsKey(stationNode.NodeID))
                     {
-                        List<SectionTypeTreeSectionCharts> sectionTypeTreeSectionCharts
-                                = _context.getSectionTypeTreeSectionCharts(sectionType_ID);
-                        number_of_vertices += sectionTypeTreeSectionCharts.Count;
-
-                        for (int i = 0; i < sectionTypeTreeSectionCharts.Count; i++)
-                        {
-                            TreeSectionCharts? treeSectionCharts
-                                = _context.getTreeSectionCharts(sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID);
-                            Vertex v = new Vertex(current_label.index, treeSectionCharts.SectionName);
-                            v.id = sectionTypeTreeSectionCharts.ElementAt(i).TreeSectionChart_ID;
-                            current_label.addVertex(v);
-
-                            bool has_set = false;
-                            int j = 0;
-                            foreach (Vertex u in labels.Last().vertices)
-                            {
-                                if (_context.is_parent(u.id, v.id))
-                                {
-                                    if (has_set == false)
-                                    {
-                                        v.vertexIndex = j;
-                                        has_set = true;
-                                    }
-                                    edges.Add((u, v));
-                                }
-                                j++;
-                            }
-                        }
-                    }
-                    max_nv = Math.Max(max_nv, number_of_vertices);
-                }
-
-                // setting doc informations
-                if(station.requiredDocId != null) {
-                    // extract documents from a string. notice that it can be different according to the format that your string is written
-                    //        <id , precent>
-                    Dictionary<int, int> required_doc = _context.required_doc(station.requiredDocId);
-                    //        <id , is the doc prepared?>
-                    Dictionary<int, bool> prepared;
-                    
-                    foreach (Vertex v in current_label.vertices)
-                    {
-                        prepared = _context.create_dic(required_doc);
-                        List<TreeSectionChartDocuments> treeSectionChartDocuments 
-                            = _context.getTreeSectionChartDocuments(v.id);
-                        foreach (TreeSectionChartDocuments TreeDocument in treeSectionChartDocuments)
-                        {
-                            Documents? document = _context.getDocument(TreeDocument.Document_ID);
-                            if (required_doc.Keys.Contains(document.DOCTYPEID))
-                            {
-                                v.doc_percent += required_doc[document.DOCTYPEID];
-                                prepared[document.DOCTYPEID] = true;
-                            }
-                        }
-                        foreach (var key in prepared.Keys) 
-                        {
-                            DocTypes d = _context.getDocTypes(key);
-                            d.precent = required_doc[key];
-                            if (prepared[key] == true)
-                                v.prepared_docTypes.Add(d);
-                            else
-                                v.unprepared_docTypes.Add(d);
-                        }
+                        Vertex v = new Vertex(label.index, stationNode.SectionName);
+                        v.id = stationNode.NodeID;
+                        v.vertexIndex = v_index;
+                        dic_id_v_label.Add(v.id, v);
+                        v_index++;
                     }
                 }
 
-                current_label.set_vertexIndex();
-                labels.Add(current_label);
+                foreach (StationNode stationNode in stationNodes)// setting edges
+                {
+                    if(stationNode.ParentID != null && dic_id_v_parent.ContainsKey(stationNode.ParentID.Value))
+                    {
+                        edges.Add((dic_id_v_parent[stationNode.ParentID.Value], dic_id_v_label[stationNode.NodeID]));
+                    }
+
+                }
+
+
+                foreach (DocInfo docInfo in docInfos) // setting ducuments
+                {
+                    DocTypes d = new DocTypes();
+                    d.ID = docInfo.ReqDocTypeID;
+                    d.precent = docInfo.Weight;
+                    d.Name = docInfo.Name;
+                    //if (dic_id_v_label.ContainsKey(docInfo.NodeID))
+                    //{
+                    if(docInfo.AppDocTypeID != null)
+                    {
+                        dic_id_v_label[docInfo.NodeID].prepared_docTypes.Add(d);
+                        dic_id_v_label[docInfo.NodeID].doc_percent += docInfo.Weight;
+                    }
+                    else
+                    {
+                        dic_id_v_label[docInfo.NodeID].unprepared_docTypes.Add(d);
+                    }
+                    //}
+                }
+
+                foreach(Vertex v in dic_id_v_label.Values)
+                {
+                    label.addVertex(v);
+                }
+
+                labels.Add(label);
+
+                dic_id_v_parent.Clear();
+                dic_id_v_parent = new Dictionary<int, Vertex>(dic_id_v_label);
+                dic_id_v_label.Clear();
                 previous_layerId = station.layerId;
-                stationId++;
+                previous_stationId = station.stationId;
             }
+
 
             ViewBag.SvgWidth = labels.Count * 150;
             ViewBag.Svgheight = max_nv * 140 + 50;
